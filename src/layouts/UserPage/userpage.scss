@@ -1,0 +1,166 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+.userpage {
+    margin: 50px 0;
+    flex-direction: column;
+    background-color: white;
+
+    & .slat-header {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+
+        & .logo {
+            height: 70px;
+            width: 70px;
+            overflow: hidden;
+            border-radius: 50%;
+            margin: 0 20px;
+        }
+
+        & .title-and-description {
+            font-family: 'Roboto', sans-serif;
+            text-align: start;
+
+            & .title {
+                font-weight: 700;
+                font-size: 20px;
+            }
+
+            & .description {
+                color: #999;
+            }
+        }
+    }
+
+    & .menu-and-treatment {
+        display: flex;
+        font-family: 'Roboto', sans-serif;
+
+        & .menus {
+            padding: 10px 30px;
+
+            & .link {
+                text-decoration: none;
+                color: #afaeae;
+            }
+            & .menu-item {
+                font-size: 17px;
+                text-align: start;
+                margin: 15px 0;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+
+            & .active  {
+                color: black;
+            }
+
+            & .cut-across {
+                padding: 5px 0;
+                border-bottom: 1px solid  #cecccc;
+            }
+        }
+
+        &  .treatment {
+
+            & .group {
+                margin: 20px 40px;
+
+                & span {
+                    display: flex;
+                    justify-content: start;
+                    color: #b4b3b3;
+                }
+
+                & .logo {
+                    height: 90px;
+                    width: 90px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    margin-top: -10px;
+                }
+
+                & .action {
+                    height: 90px;
+                    margin: 0 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    & input {
+                        font-size: 15px;
+                    }
+
+                    & .btns {
+
+                        display: flex;
+                        align-items: center;
+
+                        & .btn-save{
+                            margin: 10px 0;
+                            border: 0;
+                            background-color: #ea4c89;
+                            color: white;
+                            padding: 8px 15px;
+                            border-radius: 5px;
+                            font-weight: 500;
+                            margin-right: 10px;
+                        }
+    
+                        & .btn-del{
+                            margin: 10px 0;
+                            border: 0;
+                            background-color: #ededed;
+                            color: black;
+                            padding: 8px 15px;
+                            border-radius: 5px;
+                            font-weight: 500;
+                            margin-right: 10px;
+                        }
+                
+                        & .btn-upload:hover, & .btn-del:hover {
+                            opacity: 0.7;
+                        }
+                    }
+                }
+        
+                & label {
+                    font-family: 'Open Sans', sans-serif;
+                    font-size: 16px;
+                    font-weight: 700;
+                    display: flex;
+                    justify-content: start;
+                    margin: 7px 0;
+                }
+
+                & .textarea:focus {
+                    border: 1px solid #999;
+                }
+        
+                & .txt {
+                    height: 40px;
+                    border: 1px solid #bebdbd;
+                    width: 100%;
+                }
+        
+                & .btn-save {
+                    margin: 10px 0;
+                    border: 0;
+                    background-color: #ea4c89;
+                    color: white;
+                    padding: 10px 16px;
+                    border-radius: 8px;
+                    font-weight: 500;
+                }
+        
+                & .btn-save:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+}

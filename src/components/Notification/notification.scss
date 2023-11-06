@@ -1,0 +1,46 @@
+
+
+.notification {
+    height: 80px;
+    position: fixed;
+    right: 20px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-top: 1px solid #eae8e8;
+    border-bottom: 1px solid #eae8e8;
+    transition: 0.5s;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #d3d0d0;
+    opacity: 0;
+
+    & .status{
+        font-size: 45px;
+        margin-left: 10px;
+    }
+
+    & .message {
+        color: #717171;
+        font-weight: 480;
+        margin: 0 15px;
+        max-width: 300px;
+    }
+
+    .mess {
+        display: none;
+    }
+
+    .active {
+        display: block;
+    }
+
+    & .process {
+        position: absolute;
+        bottom: 0;
+        height: 3px;
+        left: 0;
+    }
+}

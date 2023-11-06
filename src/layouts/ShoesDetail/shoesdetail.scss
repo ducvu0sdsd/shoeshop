@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+.shoes-detail {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 50px 0;
+
+    & .overview {
+        margin: 60px 0;
+        font-family: 'Roboto Condensed', sans-serif;
+
+        & .title {
+            text-align: start;
+        }
+
+        & .content {
+            text-align: start;
+            
+        }
+    }
+
+    & .images {
+        margin: 0 30px;
+        padding: 0 20px;
+
+        & .image {
+            margin: 30px 0;
+            height: 270px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+            & .list {
+                display: flex;
+                width: 100%;
+                transition: 0.5s;
+                height: 270px;
+
+                & .item {
+                    width: 100%;
+                    display: flex;
+                    align-items: end;
+                    justify-content: center;
+                }
+            }
+        }
+
+        & .mini-images {
+            display: flex;
+            flex-wrap: wrap;
+
+            & .item {
+                min-height: 60px;
+                width: 70px;
+                display: flex;
+                justify-content: center;
+                align-items: end;
+                margin: 0 5px;
+                cursor: pointer;
+                padding-bottom: 10px;
+            }
+
+            & .active {
+                border: 1px solid #a7a7a7;
+                border-radius: 5px;
+            }
+        }
+    }
+
+    & .info {
+        font-family: 'Titillium Web', sans-serif;
+        padding: 0 20px;
+
+        & .title {
+            text-align: start;
+            margin: 10px 0;
+        }
+
+        & .brand, & .price {
+            font-family: 'Roboto Condensed', sans-serif;
+            text-align: start;
+            font-size: 19px;
+            margin: 15px 0;
+            font-weight: 500;
+            height: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        & .quantity {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+
+            & p {
+                margin: 0;
+                line-height: 30px;
+                width: 40px;
+                border: 1px solid #999;
+                border-radius: 5px;
+                margin: 0 10px;
+            }
+
+            & i {
+                font-size: 17px;
+                color: #999;
+            }
+        }
+
+        & .colors {
+            margin: 15px 0;
+
+            & .list-colors {
+                font-family: 'Roboto Condensed', sans-serif;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+
+                & .active {
+                    border-radius: 50%;
+                }
+
+                & .color-item {
+                    margin: 3px 5px;
+                    display: flex;
+                    align-items: center;
+                    height: 20px;
+                    width: 20px;
+                    cursor: pointer;
+                    // border-radius: 50%;
+                    transition: 0.5s;
+
+                    & input {
+                        margin: 0 3px;
+                        border: 1px solid #999;
+                    }
+                }
+
+                & .disable {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 25px;
+                    font-weight: bold;
+                    cursor: auto;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+            }
+        }
+
+        & .sizes {
+            margin: 15px 0;
+
+            & .list-size {
+                display: flex;
+                justify-content: start;
+                flex-wrap: wrap;
+                align-items: center;
+
+                & .item {
+                    border: 1px solid #c5c5c5;
+                    height: 30px;
+                    width: 30px;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    border-radius: 10px;
+                    align-items: center;
+                    margin: 5px 4px;
+                    font-size: 14px;
+                    color: #4e4e4e;
+                    transition: 0.5s;
+                }
+
+                & .active {
+                    background-color: #e7e7e7;
+                }
+
+                & .disable {
+                    color: #e7e7e7;
+                    border: 1px solid #e7e7e7;
+                    cursor: auto;
+                }
+            }
+        }
+
+        & .buttons {
+            display: flex;
+            margin: 10px 0;
+
+            & button {
+                line-height: 45px;
+                font-family: 'Roboto Condensed', sans-serif;
+                font-weight: bold;
+                width: 200px;
+                font-size: 16px;
+                color: white;
+                border: 0;
+                margin: 0 3px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+
+            & .btn-add {
+                background-color: #e1182c;
+                & i {
+                    font-size: 18px;
+                    margin: 0 5px;
+                }
+            }
+
+            & .btn-buy {
+                background-color: rgb(19, 192, 19);
+                & i {
+                    font-size: 22px;
+                    margin: 0 3px;
+                }
+
+            }
+        }
+    }
+}

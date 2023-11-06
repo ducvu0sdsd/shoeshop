@@ -1,0 +1,82 @@
+
+#supplier-managerment {
+    font-family: 'Roboto Condensed', sans-serif;
+    padding: 50px 60px;
+    
+    & .form-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+
+        & label {
+            text-align: start;
+            width: 130px;
+            font-size: 17px;
+        }
+
+        & input {
+            width: 500px;
+        }
+
+        & .txt-logo {
+            width: 200px;
+        }
+
+        & .images-area {
+            width: 300px;
+            height: 37px;
+            padding-left: 10px;
+            display: flex;
+            justify-content: start;
+
+            & button {
+                background: 0;
+                border: 0;
+                position: absolute;
+                top: -10px;
+                right: -10px;
+            }
+
+            & img {
+                margin: 0 3px;
+            }
+        }
+
+        & button {
+            margin: 0 2px;
+        }
+        & .table-container {
+            height: 330px;
+            overflow-y: auto;
+            position: relative;
+
+            & table {
+                border-collapse: separate;
+                border-spacing: 0;
+                & tr {
+                    transition: 0.5s;
+
+                    & td {
+                        border: 1px solid #dfdfdf;
+                        padding: 5px 15px;
+                        cursor: pointer;
+                    }
+
+                    & th {
+                        position: sticky;
+                        top: 0;
+                        z-index: 2;
+                        border: 1px solid #dfdfdf;
+                        padding: 5px 15px;
+                        background-color: white;
+                    }
+                }
+
+                & .active {
+                    background-color: #efefef;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,132 @@
+
+
+#client-management {
+    font-family: 'Roboto Condensed', sans-serif;
+    padding: 40px 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    & h4 {
+        text-align: start;
+        height: 40px;
+    }
+
+    & .form-input {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        & .avatar {
+            height: 90px;
+            width: 90px;
+            overflow: hidden;
+            border-radius: 50%;
+            margin: 7px;
+        }
+
+        & .form-group {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: start;
+            margin: 6px;
+
+            & label {
+                width: 120px;
+                text-align: start;
+            }
+
+            & input {
+                width: 320px;
+            }
+
+            & select {
+                border-radius: 5px;
+                border: 1px solid #dee2e6;
+                transition: 0.5s;
+                padding: 3px 10px;
+            }
+
+            & select:focus {
+                outline: #dee2e6;
+            }
+
+            & button {
+                margin: 0 3px;
+            }
+        }
+    }
+
+    & .collection {
+
+        & table tr th {
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        & .list-clients {
+            margin-top: 10px;
+            height: 460px;
+            overflow-y: auto;
+
+            & .active {
+                background-color: #e3e3e376;
+            }
+
+            & .client {
+                display: flex;
+                align-items: center;
+                font-size: 17px;
+                padding: 5px 0;
+                margin: 5px 0;
+                transition: 0.5s;
+                border-radius: 10px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+
+                & .item {
+                    margin: 0 7px;
+                    text-align: center;
+                }
+
+                & .avatar {
+                    height: 45px;
+                    width: 45px;
+                    overflow: hidden;
+                    margin-right: 15px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                & .name {
+                    width: 200px;
+                    text-align: start;
+                }
+
+                & .phone {
+                    width: 130px;
+                    text-align: start;
+                }
+
+                & .email {
+                    width: 250px;
+                    text-align: start;
+                }
+
+                & .address {
+                    width: 290px;
+                    text-align: start;
+                }
+
+                & .number-of-order {
+                    width: 80px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,142 @@
+
+#payment-page {
+    font-family: 'Roboto Condensed', sans-serif;
+    padding: 30px 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    & h4 {
+        text-align: start;
+        font-weight: 500;
+        font-weight: bold;
+    }
+
+    & .bill-info {
+        margin-top: 10px;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+
+        & .form-input {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            margin: 7px 0px;
+            padding: 0 10px;
+
+            & label {
+                margin: 3px 0;
+                font-size: 17px;
+            }
+
+            & table tr td {
+                display: flex;
+                align-items: center;
+
+                & label {
+                    margin: 0 5px;
+                }
+            }
+        }
+    }
+
+    & .order-info {
+        margin-top: 10px;
+        border: 1px solid #cbcbcb;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+
+        & h6 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        & .products-area{
+            border-top: 2px solid #dedede;
+            padding: 0 10px;
+
+            & .product-item {
+                margin: 20px 0;
+                display: flex;
+                align-items: center;
+
+
+                & .name {
+                    display: flex;
+                    justify-content: start;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    font-size: 16px;
+
+                    & .color {
+                        margin: 0 4px;
+                        height: 15px;
+                        width: 15px;
+                        border-radius: 50%;
+                    }
+                }
+
+                & .price {
+                    font-size: 17px;
+                }
+            }
+        }
+
+        & .total-area {
+            border-top: 2px solid #dedede;
+            display: flex;
+            justify-content: space-between;
+            height: 50px;
+            align-items: center;
+            padding-right: 20px;
+        }
+
+        & button {
+            font-size: 19px;
+            font-weight: bold;
+            padding: 0 20px;
+            height: 40px;
+            margin-top: 10px;
+        }
+    }
+    & .opa {
+        position: fixed;
+        top: 0px;
+        left: 0;
+        height: 100%;
+        background-color: #000000ad;
+        width: 100%;
+        display: none;
+    }
+
+    & .form-congratulation {
+        height: 400px;
+        width: 400px;
+        background-color: white;
+        position: fixed;
+        top: -500px;
+        z-index: 1;
+        transition: 0.5s;
+        border-radius: 5px;
+        padding: 30px 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+
+        & .title {
+            text-align: start;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        & .message {
+            text-align: start;
+            margin: 10px 0;
+        }
+    }
+}

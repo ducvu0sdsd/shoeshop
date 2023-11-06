@@ -1,0 +1,244 @@
+
+#product-management {
+    font-family: 'Roboto Condensed', sans-serif;
+    padding: 50px 60px;
+
+    & h4 {
+        text-align: start;
+    }
+
+    & .form {
+        margin-top: 30px;
+
+        & .form-group {
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            margin-top: 10px;
+    
+            & label {
+                text-align: start;
+                width: 170px;
+                font-size: 17px;
+            }
+    
+            & input, & select {
+                width: 500px;
+                height: 37px;
+            }
+
+            & textarea {
+                width: 500px;
+            }
+
+            & table {
+                width: 500px;
+                
+                & .table-container {
+                    max-height: 100px;
+                    overflow-y: auto;
+
+                    & th{
+                        position: sticky;
+                        top: 0;
+                        z-index: 2;
+                        border: 1px solid #dfdfdf;
+                        padding: 5px 15px;
+                        background-color: white; 
+                    }
+
+                    & th, & td{
+                        border: 1px solid #dee2e6;
+                    }
+                }
+            }
+
+            & select {
+                border-radius: 5px;
+                border: 1px solid #dee2e6;
+                transition: 0.5s;
+            }
+
+            & select:focus {
+                outline: #dee2e6;
+            }
+    
+            & button {
+                margin: 10px 4px;
+            }
+
+            & .txt-image {
+                width: 200px;
+            }
+            & .images-area {
+                width: 300px;
+                height: 37px;
+                padding-left: 10px;
+                display: flex;
+                justify-content: start;
+    
+                & button {
+                    background: 0;
+                    border: 0;
+                    position: absolute;
+                    top: -15px;
+                    right: -12px;
+                }
+    
+                & img {
+                    margin: 0 3px;
+                }
+            }
+
+            & .sizes-area {
+                width: 500px;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+
+                & .size-item {
+                    margin: 3px;
+                    border: 2px solid #dee2e6;
+                    padding: 0 5px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: 0.5s;
+                }
+
+                & .active {
+                    background-color: #e2e2e2;
+                }
+            }
+
+            & .colors-area {
+                width: 500px;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                
+                & .color-item {
+                    height: 19px;
+                    width: 19px;
+                    border-radius: 16px;
+                    margin: 5px;
+                    cursor: pointer;
+                    padding-bottom: 5px;
+                    transition: 0.5s;
+                }
+
+                & .active {
+                    border-radius: 5px;
+                    height: 22px;
+                    width: 22px;
+                }
+            }
+        }
+    }
+
+    & .collection {
+        height: 600px;
+        padding-left: 40px;
+        text-align: start;
+
+        & .sort-search {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & .sort {
+                display: flex;
+                font-size: 17px;
+                align-items: center;
+                
+                & select {
+                    margin: 0 10px;
+                    height: 35px;
+                    width: 150px;
+                    border: 2px solid #dee2e6;
+                    border-radius: 5px;
+                }
+                & select:focus {
+                    outline: #dee2e6;
+                }
+            }
+
+            & .search {
+                display: flex;
+                
+                & input {
+                    margin: 0 5px;
+                    height: 35px;
+                }
+
+                & button {
+                    height: 35px;
+                    width: 35px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 20px;
+                }
+            }
+        }
+
+        & .table {
+            margin-top: 10px;
+
+            & .table-container {
+                overflow-y: auto;
+                height: 480px;
+            }
+
+            & tr {
+                transition: 0.5s;
+            }
+
+            & th{
+                position: sticky;
+                top: 0;
+                z-index: 2;
+                border: 1px solid #dfdfdf;
+                padding: 5px 15px;
+                background-color: white; 
+            }
+
+            & .active {
+                background-color: #efefef;
+            }
+
+            & td {
+                border: 1px solid #dfdfdf;
+                padding: 5px 15px;
+                cursor: pointer;
+                height: 100%;
+
+                & .color-area {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+
+                    & .color-item {
+                        height: 19px;
+                        width: 19px;
+                        border-radius: 16px;
+                        margin: 5px;
+                        cursor: pointer;
+                        padding-bottom: 5px;
+                        transition: 0.5s;
+                    }
+
+                }
+
+                & .image-area {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+
+                    & img {
+                        margin: 0 3px;
+                    }
+                }
+            }
+        }
+    }
+}
