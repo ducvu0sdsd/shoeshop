@@ -37,7 +37,7 @@ function BrandsManagement({brands}) {
     const handleInsertBrand = () => {
         let token = 'Bearer ' + localStorage.getItem("token")
         let name = document.querySelector('.txt-name').value;
-        if (images.length != 0) {
+        if (images.length != 0 && name != '') {
             axios.post('/brands/insert-brand', {brandName : name, logo : images[0].img}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
                 .then(res => {
                     if (res.data == true) {

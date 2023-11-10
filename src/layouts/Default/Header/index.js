@@ -91,7 +91,7 @@ function Header({user, products}) {
         }
     }
 
-    const handleSignUp = () => {
+    const handleCheckInput = () => {
         const username = document.querySelector('.username-signup').value
         const password = document.querySelector('.password-signup').value
         const name = document.querySelector('.name-signup').value
@@ -101,6 +101,64 @@ function Header({user, products}) {
         const confirmPassword = document.querySelector('.confirm-signup').value
         const date = document.querySelector('.date-signup').value
         const gender = document.querySelector('.gender-signup').value
+        
+        if (!/^[a-z][a-z0-9]{5,20}$/.test(username)) {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "Username must be between 6 and 20 characters, using only numbers and letters"})}, 50);
+            return false;
+        } 
+        if (name == '') {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "The name cannot be empty"})}, 50);
+            return false;
+        } 
+        if (!/@gmail.com/.test(email)) {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "The email invalid"})}, 50);
+            return false;
+        } 
+        if (!/[0-9]{10}/.test(phone)) {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "Phone Number must be in the format like '0902491471'"})}, 50);
+            return false;
+        } 
+        if (address == '') {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "The address cannot be empty"})}, 50);
+            return false;
+        } 
+        if (gender == 'None') {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "Please Choose Gender"})}, 50);
+            return false;
+        } 
+        if (date == '') {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "Please Choose Date"})}, 50);
+            return false;
+        } 
+        if (!/.{6,}/.test(password)) {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "The Password must be at least 6 characters"})}, 50);
+            return false;
+        } 
+        if (password != confirmPassword) {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "Password and confirmation password do not match"})}, 50);
+            return false;
+        } 
+        return true;
+    }
+
+    const handleSignUp = () => {
+        const username = document.querySelector('.username-signup').value
+        const password = document.querySelector('.password-signup').value
+        const name = document.querySelector('.name-signup').value
+        const email = document.querySelector('.email-signup').value
+        const phone = document.querySelector('.phone-signup').value
+        const address = document.querySelector('.address-signup').value
+        const date = document.querySelector('.date-signup').value
+        const gender = document.querySelector('.gender-signup').value
         let image = ''
         if (document.querySelector('.avatar-signup').files[0]) {
             let render = new FileReader()
@@ -108,6 +166,7 @@ function Header({user, products}) {
                 image = e.target.result
                 axios.post('/account/sign-up',{username : username, password : password,name : name, email : email, phone : phone, address : address, date : date, gender : gender ,avatar : image,admin : false}, {headers: {'Content-Type': 'application/json'}})
                     .then(res => {
+                        handleCleanVerify()
                         if (res.data == true){
                             axios.post('/email/notice-of-successful-account-creation', 
                             {
@@ -123,7 +182,7 @@ function Header({user, products}) {
                             handleChangeSign(0)
                         } else {
                             setNof({status : 'none', message : ""})
-                            setTimeout(() => {setNof({status : 'fail', message : 'Username is already taken'})}, 50);
+                            setTimeout(() => {setNof({status : 'fail', message : 'Username or Email is already taken'})}, 50);
                         }
                     })
             }
@@ -131,6 +190,7 @@ function Header({user, products}) {
         } else {
             axios.post('/account/sign-up',{username : username, password : password,name : name, email : email, phone : phone, address : address, date : date, gender : gender ,avatar : image,admin : false}, {headers: {'Content-Type': 'application/json'}})
                 .then(res => {
+                    handleCleanVerify()
                     if (res.data == true){
                         axios.post('/email/notice-of-successful-account-creation', 
                             {
@@ -146,31 +206,10 @@ function Header({user, products}) {
                         handleChangeSign(0)
                     } else {
                         setNof({status : 'none', message : ""})
-                        setTimeout(() => {setNof({status : 'fail', message : 'Username is already taken'})}, 50);
+                        setTimeout(() => {setNof({status : 'fail', message : 'Username or Email is already taken'})}, 50);
                     }
                 })
         }
-
-
-
-
-
-        // if (!password == confirmPassword) {
-        //     setNof({status : 'none', message : ""})
-        //     setTimeout(() => {setNof({status : 'fail', message : "Password don't match Confirm Password"})}, 50);
-        //     return
-        // }    
-        // if (!/^[a-z][a-z0-9]{5,20}$/.test(username)) {
-        //     setNof({status : 'none', message : ""})
-        //     setTimeout(() => {setNof({status : 'fail', message : "Username must be between 6 and 20 characters, using only numbers and letters"})}, 50);
-        //     return
-        // } 
-        // if (!/^[a-zA-Z0-9][a-zA-Z0-9]{5,20}$/.test(password)) {
-        //     setNof({status : 'none', message : ""})
-        //     setTimeout(() => {setNof({status : 'fail', message : "Password must be between 6 and 20 characters"})}, 50);
-        //     return
-        // }
-        
     }
 
     const handleSignIn = () => {
@@ -255,6 +294,7 @@ function Header({user, products}) {
     }
 
     const handleValidateInputSignUp = () => {
+        if (!handleCheckInput()) return
         const email = document.querySelector('.email-signup').value
         axios.post('/email/verify-email', {toEmail : email},  {headers: {'Content-Type': 'application/json'}})
             .then(res => {
@@ -465,7 +505,7 @@ function Header({user, products}) {
                             </div>
                             <div className='form-group'>
                                 <label>Email *</label>
-                                <input type='text' className='email-signup'/>
+                                <input type='text' className='email-signup' placeholder='@gmail.com'/>
                             </div>
                             <div className='form-group'>
                                 <label>Password *</label>

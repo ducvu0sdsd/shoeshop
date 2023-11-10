@@ -35,7 +35,12 @@ function ProductManagement({brands, products1, suppliers}) {
 
     const handleRemoveImage = (index) => {
         const newArray = images.filter(item => item.id !== index);
-        setImages(newArray)
+        let l = []
+        newArray.forEach((item, index1) => {
+            item.id = index1
+            l.push(item)
+        })
+        setImages(l)
     }
 
     const getData = () => {

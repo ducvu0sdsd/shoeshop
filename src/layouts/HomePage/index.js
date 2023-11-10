@@ -8,6 +8,7 @@ import PSneaker from './p-sneaker.jpg'
 import PSandal from './p-sandal.jpg'
 import PCustom from './p-custom.jpg'
 import PAcc from './p-acc.jpg'
+import { Link } from 'react-router-dom'
 
 function HomePage() {
     return (
@@ -22,22 +23,22 @@ function HomePage() {
                     <div className='item'>
                         <img src={Sneaker} width='100%'/>
                         <div className='wrapper'></div>
-                        <button>Sneaker</button>
+                        <Link to={'/categories/sneakers/all'}><button>Sneaker</button></Link> 
                     </div>
                     <div className='item'>
                         <img src={Sandal} width='100%'/>
                         <div className='wrapper'></div>
-                        <button>Sandal</button>
+                        <Link to={'/categories/sandals/all'}><button>Sandal</button></Link> 
                     </div>
                     <div className='item'>
                         <img src={Custom} width='100%'/>
                         <div className='wrapper'></div>
-                        <button>Custom</button>
+                        <Link to={'/categories/customs/all'}><button>Custom</button></Link> 
                     </div>
                     <div className='item'>
                         <img src={Accessories} width='100%'/>
                         <div className='wrapper'></div>
-                        <button>Accessories</button>
+                        <Link to={'/categories/accessories/all'}><button>Accessories</button></Link> 
                     </div>
                 </div>
             </div>
@@ -45,22 +46,22 @@ function HomePage() {
                 <div className='item col-lg-5'>
                     <img width='100%' src={PSneaker} />
                     <h2>SNEAKER BACK TO SCHOOL</h2>
-                    <button>SHOP NOW</button>
+                    <Link to={'/categories/sneakers/all'}><button>SHOP NOW</button></Link> 
                 </div>
                 <div className='item col-lg-5'>
                     <img width='100%' src={PSandal} />
                     <h2>SANDAL STYLES</h2>
-                    <button>SHOP NOW</button>
+                    <Link to={'/categories/sandals/all'}><button>SHOP NOW</button></Link> 
                 </div>
                 <div className='item col-lg-5'>
                     <img width='100%' src={PCustom} />
                     <h2>CUSTOM TO YOUR STYLE</h2>
-                    <button>SHOP NOW</button>
+                    <Link to={'/categories/customs/all'}><button>SHOP NOW</button></Link> 
                 </div>
                 <div className='item col-lg-5'>
                     <img width='100%' src={PAcc} />
                     <h2>SUPPORT FOR YOUR SHOES</h2>
-                    <button>SHOP NOW</button>
+                    <Link to={'/categories/accessories/all'}><button>SHOP NOW</button></Link> 
                 </div>
 
             </div>
