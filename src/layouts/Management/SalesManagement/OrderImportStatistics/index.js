@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Notification from '../../../../components/Notification'
 
 function OrderImportStatistics({setOption, orderImports}) {
-    console.log(orderImports)
     
     const [currentOrder, setCurrentOrder] = useState(null)
     const [nof, setNof] = useState({status : 'none', message : 'none'})
@@ -52,9 +51,11 @@ function OrderImportStatistics({setOption, orderImports}) {
             setTimeout(() => {setNof({status : 'fail', message : 'The end date must be after the start date'})}, 50);
             return;
         }
+
         let l = []
         orderImports.forEach(item => {
             let currentDate = new Date(item.order_date)
+            console.log(currentDate, date1Value, date2Value)
             if (currentDate>= date1Value && currentDate <= date2Value) {
                 l.push(item)
             }

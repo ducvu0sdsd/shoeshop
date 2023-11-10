@@ -190,6 +190,16 @@
         & .buttons {
             display: flex;
             margin: 10px 0;
+            position: relative;
+
+            & .item-to-cart {
+                position: absolute;
+                left: 180px;
+                top: -30px;
+                z-index: 1;
+                transition: 0.5s;
+                opacity: 0;
+            }
 
             & button {
                 line-height: 45px;

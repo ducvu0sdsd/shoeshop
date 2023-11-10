@@ -22,6 +22,7 @@ function ClientsManagement({clients}) {
         document.querySelector('#client-management .txt-date').value = new Date(client.client.dateofbirth).toISOString().split('T')[0]
         document.querySelector('#client-management .txt-phone').value = client.client.phonenumber
         document.querySelector('#client-management .txt-email').value = client.client.email
+        document.querySelector('#client-management .txt-gender').value = client.client.gender
         document.querySelector('#client-management .txt-address').value = client.client.address
         document.querySelector('#client-management .txt-username').value = client.client.username
         document.querySelector('#client-management .txt-num').value = client.numberOfOrder
@@ -36,6 +37,7 @@ function ClientsManagement({clients}) {
         document.querySelector('#client-management .txt-date').value = ''
         document.querySelector('#client-management .txt-phone').value = ''
         document.querySelector('#client-management .txt-email').value = ''
+        document.querySelector('#client-management .txt-gender').value = 'none'
         document.querySelector('#client-management .txt-address').value = ''
         document.querySelector('#client-management .txt-username').value = ''
         document.querySelector('#client-management .txt-num').value = ''
@@ -51,6 +53,7 @@ function ClientsManagement({clients}) {
         client.dateofbirth = document.querySelector('.txt-date').value
         client.email = document.querySelector('#client-management .txt-email').value
         client.name = document.querySelector('#client-management .txt-name').value
+        client.gender = document.querySelector('#client-management .txt-gender').value
         client.phonenumber = document.querySelector('#client-management .txt-phone').value
         axios.post('/clients/update-client', {user : client}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then (res => {
@@ -119,6 +122,14 @@ function ClientsManagement({clients}) {
                     <div className='form-group'>
                         <label>Address: </label>
                         <input type="text" className="form-control txt-address" placeholder='Address' />
+                    </div>
+                    <div className='form-group'>
+                        <label>Gender</label>
+                        <select class="form-select txt-gender" aria-label="Default select example">
+                            <option value="none">None</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
                     </div>
                     <div className='form-group'>
                         <label>Username: </label>

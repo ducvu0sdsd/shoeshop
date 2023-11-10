@@ -46,7 +46,7 @@ function ListShoe({products}) {
                     <div className='shoes'>
                         {list_products.map((p, index) => {
                             return (
-                                <Link style={{textDecoration : 'none', color : 'black'}} to={`/categories/${p.category.toLowerCase().split(' ').join('-')}s/${p.brand.brandName.toLowerCase().split(' ').join('-')}/${p.name.toLowerCase().split(' ').join('-')}`}>
+                                <Link onClick={() => window.location.reload()} style={{textDecoration : 'none', color : 'black'}} to={`/categories/${p.category.toLowerCase().split(' ').join('-')}s/${p.brand.brandName.toLowerCase().split(' ').join('-')}/${p.name.toLowerCase().split(' ').join('-')}`}>
                                     <div key={index} className='item'>
                                         <div className='image'>
                                             <img width='85%' src={p.images[0].image}/>

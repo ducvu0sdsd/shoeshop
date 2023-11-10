@@ -92,10 +92,11 @@ function EditProfilePage({user}) {
         let txt_phonenumber = document.querySelector('.txt-phonenumber').value
         let txt_date = document.querySelector('.txt-date').value
         let txt_address = document.querySelector('.txt-address').value
+        let txt_gender = document.querySelector('.txt-gender').value
         let t = localStorage.getItem("token")
         let username = localStorage.getItem("username")
         let token = 'Bearer ' + t;
-        axios.put('/account/update-information-account',{username : username, name : txt_name, phone : txt_phonenumber, date : txt_date, address : txt_address},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        axios.put('/account/update-information-account',{username : username, name : txt_name, phone : txt_phonenumber, date : txt_date, address : txt_address, gender : txt_gender},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data == true) {
                     setIsLoad(!isLoad)
@@ -113,12 +114,13 @@ function EditProfilePage({user}) {
         let txt_address = document.querySelector('.txt-address')
         let txt_phonenumber = document.querySelector('.txt-phonenumber')
         let txt_date = document.querySelector('.txt-date')
+        let txt_gender = document.querySelector('.txt-gender')
         let date = new Date(user.dateofbirth)
         txt_address.value = user.address
         txt_name.value = user.name
         txt_phonenumber.value = user.phonenumber
         txt_date.value = date.toISOString().split('T')[0];
-
+        txt_gender.value = user.gender
     }, [])
 
     return (
@@ -165,6 +167,14 @@ function EditProfilePage({user}) {
                             <div className='group'>
                                 <label>Date Of Birth</label>
                                 <input type="date" className="form-control txt-date txt" />
+                            </div>
+                            <div className='group'>
+                                <label>Gender</label>
+                                <select class="form-select txt-gender" aria-label="Default select example">
+                                    <option value="none">None</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
                             </div>
                             <div className='group'>
                                 <label>Phone Number</label>

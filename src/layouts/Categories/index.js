@@ -11,7 +11,6 @@ function Categories({categoryName, brandName, products}) {
     const [list_products , setList_products] = useState([])
     const colors = ['rgb(205, 97, 85)','rgb(236, 112, 99)','rgb(175, 122, 197)','rgb(165, 105, 189)','rgb(84, 153, 199)','rgb(93, 173, 226)','rgb(72, 201, 176)','rgb(69, 179, 157)','rgb(82, 190, 128)','rgb(88, 214, 141)','rgb(244, 208, 63)','rgb(245, 176, 65)','rgb(235, 152, 78)','rgb(220, 118, 51)','rgb(240, 243, 244)','rgb(202, 207, 210)','rgb(170, 183, 184)','rgb(153, 163, 164)','rgb(93, 109, 126)','rgb(86, 101, 115)']
     const sizes = [36,37,38,39,40,41,42,43,44,45]
-
     useEffect(() => {
         const arr = document.querySelectorAll('.categories .active')
         arr.forEach(item => {
@@ -22,13 +21,44 @@ function Categories({categoryName, brandName, products}) {
 
     useEffect(() => {
         let l = []
-        products.forEach(item => {
-            if (item.category == categoryName && item.brand.brandName == brandName) {
-                l.push(item)
-            }
-        })
+        if (brandName == 'All Sneaker') {
+            products.forEach(item => {
+                if (item.category == categoryName) {
+                    l.push(item)
+                }
+            })
+        } 
+        else if (brandName == 'All Sandal') {
+            products.forEach(item => {
+                if (item.category == categoryName) {
+                    l.push(item)
+                }
+            })
+        }
+        else if (brandName == 'All Custom') {
+            products.forEach(item => {
+                if (item.category == categoryName) {
+                    l.push(item)
+                }
+            })
+        }
+        else if (brandName == 'All Accessory') {
+            products.forEach(item => {
+                if (item.category == categoryName) {
+                    l.push(item)
+                }
+            })
+        }
+        else {
+            products.forEach(item => {
+                if (item.category == categoryName && item.brand.brandName == brandName) {
+                    l.push(item)
+                }
+            })
+        }
+        
         setProducts1(l)
-    }, [reload])
+    }, [reload, brandName])
 
     useEffect(() => {
         let l = []

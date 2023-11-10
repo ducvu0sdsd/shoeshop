@@ -19,10 +19,11 @@ import SupplierManagerMent from './layouts/Management/SupplierManagement';
 import ClientsManagement from './layouts/Management/ClientsManagement';
 import PaymentPage from './layouts/PaymentPage';
 import SalesManagement from './layouts/Management/SalesManagement';
+import CartPage from './layouts/CartPage'
 
 
 function App() {
-  const [isload, setIsLoad] = useContext(Context)
+  const [isload, setIsLoad, customer_name, data] = useContext(Context)
   const [user, setUser] = useState(null)
   const [brands, setBrands] = useState([])
   const [products, setProducts] = useState([])
@@ -35,10 +36,10 @@ function App() {
   const ScrollToTop = () => {
     const { pathname } = useLocation();
     useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        // window.scrollTo({
+        //     top: 0,
+        //     behavior: 'smooth'
+        // });
     }, [pathname]);
   };
 
@@ -47,6 +48,7 @@ function App() {
     axios.get('/products/get-all-product', {headers : {'Content-Type': 'application/json'}})
       .then(res => {
           setProducts(res.data)
+          data.setProducts(res.data)
       })
   }, [isload])
 
@@ -93,6 +95,7 @@ function App() {
             .then(res => {
                 if (res.data != "") {
                   setUser(res.data)
+                  data.setUser(res.data)
                 } else {
                   localStorage.removeItem('token')
                   localStorage.removeItem('username')
@@ -151,7 +154,13 @@ function App() {
           <Route path='/account/suppliers-management' element={user ? user.admin ? <SupplierManagerMent suppliers={suppliers} /> : <Navigate to='/' replace/> : <Navigate to='/' replace/>} /> 
           <Route path='/account/clients-management' element={user ? user.admin ? <ClientsManagement clients={clients} /> : <Navigate to='/' replace/> : <Navigate to='/' replace/>} /> 
           <Route path='/account/sales-management' element={user ? user.admin ? <SalesManagement orderImports={orderImports} orderBuys={orderBuys} /> : <Navigate to='/' replace/> : <Navigate to='/' replace/>} /> 
-          <Route path='/payment/product-id/:id/:color/:size/:price/:quantity' element={<PaymentPage products={products} user1={user} />} />
+          <Route path='/payment' element={<PaymentPage user1={user} />} />
+          <Route path='/payment/:cart' element={user ? <PaymentPage user1={user} /> : <Navigate to='/' replace/>} />
+          <Route path='/cart' element={user ? <CartPage /> : <></>} />
+          <Route path={`/categories/sneakers/all`} element={<Categories categoryName={'Sneaker'} brandName={'All Sneaker'} products={products}/>}/>
+          <Route path={`/categories/sandals/all`} element={<Categories categoryName={'Sandal'} brandName={'All Sandal'} products={products}/>}/>
+          <Route path={`/categories/customs/all`} element={<Categories categoryName={'Custom'} brandName={'All Custom'} products={products}/>}/>
+          <Route path={`/categories/accessories/all`} element={<Categories categoryName={'Accessories'} brandName={'All Accessory'} products={products}/>}/>
 
           {/* Categories */}
           {listMenu ? listMenu.sneakers.map((item, index) => {

@@ -9,15 +9,18 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import imageSuccess from './image-removebg-preview.png'
 
-function PaymentPage({products, user1}) {
+function PaymentPage({user1}) {
 
     const [user, setUser] = useState(null)
-    const [isload,setIsLoad] = useContext(Context);
+    const [isload, setIsLoad, customer_name, data] = useContext(Context)
+    const {cart} = useParams()
     const [nof, setNof] = useState({status : 'none', message : 'none'})
-    let {id, color, size,  price, quantity} = useParams()
-    const [product, setProduct] = useState(null)
-    const [colorsize, setColorsize] = useState(null)
+    const [products, setProducts] = useState([])
     const navigate = useNavigate()
+
+    useEffect(() => {
+        setProducts(data.payload)
+    }, [data.payload])
 
     const handleCheckInput = () => {
         let txtname = document.querySelector('#payment-page .txt-name').value
@@ -60,34 +63,25 @@ function PaymentPage({products, user1}) {
             document.querySelector('#payment-page .txt-email').value = user1.email
             document.querySelector('#payment-page .txt-address').value = user1.address
         }
-    }, [user1])
-
-    useEffect(() => {
-        products.forEach(p => {
-            if (p.id == id) {
-                setProduct(p)
-            }
-        })
-    }, [products])
-
-    useEffect(() => {
-        axios.get(`/colors-sizes/get-color-size-by-color-and-size?color=${color}&size=${size}`, {headers : {'Content-Type': 'application/json'}})
-        .then(res => {
-            setColorsize(res.data)
-        })
-    },[products])    
+    }, [user1])  
 
     const handleOrderWithAccount = () => {
         if (!handleCheckInput()) return
-        if (colorsize != null) {
-            let note = document.querySelector('#payment-page .txt-note').value
-            let method = document.querySelector('input[name="payment"]:checked').value
-            let quantity1  = quantity
-            let colorsize1 = colorsize;
-            colorsize1.quantity = colorsize1.quantity - quantity1
+        let note = document.querySelector('#payment-page .txt-note').value
+        let method = document.querySelector('input[name="payment"]:checked').value
+        let colorsizes = products.map(p => ({ color: p.color, size: p.size, quantity: parseInt(p.quantityProduct) - parseInt(p.quantity), quantityOrder : parseInt(p.quantity), product_id : p.id }));
+        if (cart) {
+            let user_id = user.id
+                axios.post('/payment/order-from-cart-of-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
+                    .then(res => {
+                        if (res.data == true) {
+                            handleCongratulations()
+                        }
+                    })
+        } else {
             if (user) {
                 let user_id = user.id
-                axios.post('/payment/order-from-client',{note : note, method : method, user_id : user_id, colorsize : colorsize1, quantity : quantity1},{headers : {'Content-Type': 'application/json'}})
+                axios.post('/payment/order-from-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
                             handleCongratulations()
@@ -99,7 +93,7 @@ function PaymentPage({products, user1}) {
                 let txtemail = document.querySelector('#payment-page .txt-email').value
                 let txtaddress = document.querySelector('#payment-page .txt-address').value
                 axios.post('/payment/order-from-guest',
-                    {note : note, method : method, address : txtaddress, name : txtname, email : txtemail, phone : txtphone, colorsize : colorsize1, quantity : quantity1},
+                    {note : note, method : method, address : txtaddress, name : txtname, email : txtemail, phone : txtphone, colorsizes : colorsizes},
                     {headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
@@ -126,7 +120,6 @@ function PaymentPage({products, user1}) {
         opa.style.display = 'none'
         form.style.top = '-500px'
     }
-
 
     return (
         <div id='payment-page' className='col-lg-12'>
@@ -178,20 +171,23 @@ function PaymentPage({products, user1}) {
                     <h6 className='col-lg-6' style={{textAlign : 'start', paddingLeft: "10px"}}>Product</h6>
                     <h6 className='col-lg-6' style={{textAlign : 'end', paddingRight: "10px"}}>Provisional</h6>
                     <div className='col-lg-12 products-area'>
-                        <div className='col-lg-12 product-item'>
-                            <div className='name col-lg-10'>
-                                {product ? <>
-                                    <img width={"40px"} src={product.images[0].image} style={{marginRight : '8px'}} /> {product.name.toUpperCase()} -- <b style={{margin : "0 5px"}}>Size {size}</b> -- <b style={{margin : "0 5px"}}>Color</b> <div className='color' style={{backgroundColor : color}}/> <b style={{margin : "0 5px"}}>x {quantity}</b>
-                                </> : <></>}
-                            </div>
-                            <div className='price col-lg-2'>
-                                $ {price}
-                            </div>
-                        </div>
+                        {products.length != 0 ?
+                            products.map((product, index) => {
+                                return <div className='col-lg-12 product-item'>
+                                    <div className='name col-lg-10'>
+                                        <img key={index} width={"40px"} src={product.images[0].image} style={{marginRight : '8px'}} /> {product.name.toUpperCase()} -- <b style={{margin : "0 5px"}}>Size {product.size}</b> -- <b style={{margin : "0 5px"}}>Color</b> <div className='color' style={{backgroundColor : product.color}}/> <b style={{margin : "0 5px"}}>x {product.quantity}</b>
+                                    </div>
+                                    <div className='price col-lg-2'>
+                                        $ {product.price}
+                                    </div>
+                                </div>
+                            })
+                        :<></>}
                     </div>
                     <div className='col-lg-12 total-area'>
                         <h6 className='col-lg-10' style={{textAlign : 'start', paddingLeft: "10px"}}>Total</h6>
-                        <h6 className='col-lg-2' style={{textAlign : 'end', paddingRight: "10px"}}>$ {parseFloat(price * quantity)}</h6>
+                        <h6 className='col-lg-2' style={{textAlign : 'end', paddingRight: "10px"}}>$ {products.reduce((total, current) => {return total + (current.price * parseInt(current.quantity))}, 0)}
+                        </h6>
                     </div>
                     <button onClick={() => handleOrderWithAccount()} type="button" className="btn btn-success">Order Now !!!</button>
                     <p style={{textAlign : 'start', lineHeight : '25px', margin : '10px 0'}}>Your personal information will be used to process orders, enhance your website experience, and for other specific purposes described in our privacy policy.</p>

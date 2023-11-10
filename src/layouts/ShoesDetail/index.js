@@ -6,6 +6,7 @@ import ListShoe from './ListShoe';
 import Notification from '../../components/Notification'
 import { Context } from '../../components/UseContext/ThemeContext';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function ShoesDetail({product, products, user}) {
     const [listImage, setListImage] = useState([])
@@ -15,7 +16,7 @@ function ShoesDetail({product, products, user}) {
     const [colors, setColors] = useState([])
     const [list_size_color_quantity_price, setList_size_color_quantity_price] = useState([])
     const [load, setLoad] = useState(false)
-    const [isLoad, setIsLoad] = useContext(Context)
+    const [isLoad, setIsLoad, customer_name, data] = useContext(Context)
     const [nof, setNof] = useState({status : 'none', message : 'none'})
     const [quantity, setQuantity] = useState(0)
     const [quantityProduct, setQuantityProduct] = useState(0)
@@ -197,9 +198,53 @@ function ShoesDetail({product, products, user}) {
         return true
     }
 
+    const handleMoveItem = () => {
+        const addtoCartItem = document.querySelector('.item-to-cart')
+        addtoCartItem.style.opacity = 1
+        addtoCartItem.style.top = '-470px'
+        addtoCartItem.style.left = "730px"
+        setTimeout(() => {
+            addtoCartItem.style.opacity = 0
+        }, 500)
+        setTimeout(() => {
+            addtoCartItem.style.top = '-30px'
+            addtoCartItem.style.left = "180px"
+        }, 1000)
+    }
+
+    const handleAddToCart = () => {
+        if (user) {
+            handleMoveItem()
+            data.setCarts([...data.carts,{product, colorsize : currentProduct, quantity : quantity}])
+            axios.post('/cart/insert-cart', {user_id : user.id, color : currentProduct.color, size : currentProduct.size, quantity : quantity}, {headers : {'Content-Type': 'application/json'}})
+                .then(res => {
+                    if (res.data == true) {
+                        let l = []
+                        axios.get('/cart/get-all-cart-by-user?user_id='+user.id, {headers : {'Content-Type': 'application/json'}})
+                            .then (res => {
+                                console.log(res.data)
+                                res.data.forEach(item => {
+                                    products.forEach(item1 => {
+                                        if (item1.id == item.colorSize.product.id) {
+                                            l.push({
+                                                product : item.colorSize.product,
+                                                colorsize : {color : item.colorSize.color, size : item.colorSize.size, price : item.colorSize.retailPrice, quantity : item.colorSize.quantity},
+                                                quantity : item.quantity,
+                                                image : item1.images[0].image
+                                            })
+                                        }
+                                    })
+                                })
+                                data.setCarts(l)
+                            })
+                    }
+                })
+            setIsLoad(!isLoad)
+        }
+    }
+
     return (
         <div className='shoes-detail col-lg-12'>
-            {console.log(listRecomment)}
             <Notification status={nof.status} message={nof.message}/>
             <div className='images col-lg-4'>
                 <div className='image col-lg-12' ref={imageRef}>
@@ -245,7 +290,7 @@ function ShoesDetail({product, products, user}) {
                                 }} 
                                 key={index} className='item'>{size}</div>
                             })}
-                            <i className='bx bx-x btn-clean' onClick={(e) => {setLoad(!load); e.target.style.display = 'none'}} style={{cursor: 'pointer',fontSize :'21px', color : '#999', display : 'none'}}></i>
+                            <i className='bx bx-x btn-clean' onClick={(e) => {setLoad(!load); e.target.style.display = 'none'; setCurrentProduct(null)}} style={{cursor: 'pointer',fontSize :'21px', color : '#999', display : 'none'}}></i>
                         </div>
                     </div>
                     <div className='col-lg-10 colors'>
@@ -254,14 +299,14 @@ function ShoesDetail({product, products, user}) {
                             {colors.map((color, index) => {
                                 if (lcolors.length != 0) {
                                     if (!lcolors.includes(color)) {
-                                        return <div className='color-item disable' style={{color : color}}>x</div>
+                                        return <div key={index} className='color-item disable' style={{color : color}}>x</div>
                                     } else {
                                         return <div onClick={(e) => handleOptionColor(e)} key={index} className='color-item' style={{backgroundColor : color}}></div>
                                     }
                                 } else return <div onClick={(e) => handleOptionColor(e)} key={index} className='color-item' style={{backgroundColor : color}}></div>
                                 
                             })}
-                            <i className='bx bx-x btn-clean' onClick={(e) => {setLoad(!load); e.target.style.display = 'none'}} style={{cursor: 'pointer',fontSize :'21px', color : '#999', display : 'none'}}></i>
+                            <i className='bx bx-x btn-clean' onClick={(e) => {setLoad(!load); e.target.style.display = 'none'; setCurrentProduct(null)}} style={{cursor: 'pointer',fontSize :'21px', color : '#999', display : 'none'}}></i>
                         </div>
                     </div>
                     <div className='col-lg-12 quantity'>
@@ -278,12 +323,25 @@ function ShoesDetail({product, products, user}) {
                     </div>
                 </>}
                 <div className='col-lg-12 buttons'>
+                    <div className='item-to-cart'>
+                        <img height={"30px"} src={listImage[0]} />
+                    </div>
                     {product.sizes ? <>
-                        <button className='btn-add'><i className="fa-solid fa-cart-arrow-down"></i> Add To Cart</button>
                         {(currentProduct != null) ? 
                             <button onClick={() => {
                                 if (checkQuantity()) {
-                                    navigate(`/payment/product-id/${product.id}/${currentProduct.color}/${currentProduct.size}/${currentProduct.price}/${quantity}`);
+                                    handleAddToCart()
+                                }
+                            }} className='btn-add'><i className="fa-solid fa-cart-arrow-down"></i> Add To Cart</button> :
+                            <button onClick={() => {checkAction()}} className='btn-add'><i className="fa-solid fa-cart-arrow-down"></i> Add To Cart</button>
+                        }
+                        {(currentProduct != null) ? 
+                            <button onClick={() => {
+                                if (checkQuantity()) {
+                                    navigate(`/payment`);
+                                    data.setPayload([
+                                        {...product, color : currentProduct.color, size : currentProduct.size, price : currentProduct.price, quantity : quantity, quantityProduct : quantityProduct}
+                                    ])
                                 }
                             }} className='btn-buy'>Buy Now</button>:
                             <button onClick={() => checkAction()} className='btn-buy'>Buy Now</button>

@@ -1,0 +1,170 @@
+
+#cartpage {
+    padding: 50px 60px;
+    display: flex;
+    justify-content: center;
+    
+    & .form-not-cart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 20px;
+        min-height: 300px;
+        justify-content: center;
+        
+        & button {
+            margin: 15px 0;
+            color: white;
+            background-color: black;
+            border: 0;
+            padding: 10px 25px;
+            font-size: 18px;
+        }
+    }
+
+    & .list-product-area {
+        font-family: 'Roboto Condensed', sans-serif;
+        display: flex;
+        flex-direction: column;
+        padding-right: 10px;
+        border-right: 2px solid #ededed;
+
+        & .item {
+            display: flex;
+            border-bottom: 2px solid #ededed;
+
+            & .it {
+                width: 110px;
+                padding: 5px;
+                display: flex;
+                font-weight: bold;
+                font-size: 17px;
+                justify-content: center;
+            }
+            & .image-name {
+                width: 490px;
+                padding: 5px;
+                justify-content: start;
+            }
+            & .quantity {
+                padding-left: 10px;
+            }
+        }
+
+        & .list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-top: 10px;
+
+            & .list-item {
+                display: flex;
+                & .it {
+                    width: 110px;
+                    padding: 5px;
+                    display: flex;
+                    font-weight: bold;
+                    font-size: 17px;
+                    padding-left: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                & .quantity {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    & input {
+                        text-align: center;
+                        margin: 0 5px;
+                        width: 40px;
+                        height: 25px;
+                        font-size: 16px;
+                    }
+
+                    & i {
+                        cursor: pointer;
+                    }
+                }
+                & .image-name {
+                    width: 490px;
+                    padding: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: start;
+
+                    & i {
+                        color: #cbcbcb;
+                        font-size: 25px;
+                        margin: 0 5px;
+                        cursor: pointer;
+                    }
+
+                    & .image {
+                        width: 80px;
+                        margin: 0 5px ;
+                        margin-right: 10px;
+                    }
+
+                    & .name {
+                        font-weight: 500;
+                        text-align: start;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+
+        & .btn-view {
+            display: flex;
+            align-items: center;
+            padding: 3px 5px;
+            width: 250px;
+            justify-content: center;
+            font-weight: bold;
+            background: 0;
+            margin-top: 15px;
+
+            & i {
+                margin: 0 7px;
+            }
+        }
+    }
+
+    & .payment-area {
+        padding: 5px 40px;
+        font-family: 'Roboto Condensed', sans-serif;
+
+        & .title {
+            font-weight: bold;
+            font-size: 19px;
+            border-bottom: 2px solid #dadada;
+            display: flex;
+            align-items: center;
+
+            & i {
+                margin: 0 5px;
+            }
+        }
+
+        & .total {
+            line-height: 50px;
+            font-size: 17px;
+            // font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        & button {
+            width: 100%;
+            border: 0;
+            padding: 8px 0;
+            font-weight: bold;
+            background-color: #d26e4b;
+            color: white;
+        }
+    }
+}

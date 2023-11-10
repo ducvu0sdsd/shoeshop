@@ -6,10 +6,44 @@ function Provider({children}) {
 
     const [isload, setIsLoad] = useState(false);
     const [user, setUser] = useState(null)
-    let customer_name = ''
+    const [payload, setPayload] = useState([])
+    const [carts, setCarts] = useState([])
+    const [products, setProducts] = useState([])
 
+    useEffect(() => {
+        if (user && products.length != 0) {
+            axios.get('/cart/get-all-cart-by-user?user_id='+user.id, {headers : {'Content-Type': 'application/json'}})
+            .then (res => {
+                let l = []
+                res.data.forEach(item => {
+                    products.forEach(item1 => {
+                        if (item1.id == item.colorSize.product.id) {
+                            l.push({
+                                id : item.id,
+                                product : item.colorSize.product,
+                                colorsize : {color : item.colorSize.color, size : item.colorSize.size, price : item.colorSize.retailPrice, quantity : item.colorSize.quantity},
+                                quantity : item.quantity,
+                                image : item1.images[0].image
+                            })
+                        }
+                    })
+                })
+                setCarts(l)
+            })
+        }
+    }, [user])
+
+    let customer_name = ''
+    let data = {
+        payload : payload,
+        setPayload : setPayload,
+        carts : carts,
+        setCarts : setCarts,
+        setUser : setUser,
+        setProducts : setProducts
+    }
     return ( 
-        <Context.Provider value={[isload,setIsLoad,user, customer_name]}>
+        <Context.Provider value={[isload,setIsLoad, customer_name, data]}>
             {children}
         </Context.Provider>
      );
