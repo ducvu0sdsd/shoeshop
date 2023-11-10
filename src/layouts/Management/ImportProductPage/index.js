@@ -1,14 +1,16 @@
 
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Notification from '../../../components/Notification'
 import './importProduct.scss'
 import axios from 'axios'
+import {Context} from '../../../components/UseContext/ThemeContext'
 
 function ImportProductPage({products}) {
     const [nof, setNof] = useState({status : 'none', message : 'none'})
     const colors = ['rgb(205, 97, 85)','rgb(236, 112, 99)','rgb(175, 122, 197)','rgb(165, 105, 189)','rgb(84, 153, 199)','rgb(93, 173, 226)','rgb(72, 201, 176)','rgb(69, 179, 157)','rgb(82, 190, 128)','rgb(88, 214, 141)','rgb(244, 208, 63)','rgb(245, 176, 65)','rgb(235, 152, 78)','rgb(220, 118, 51)','rgb(240, 243, 244)','rgb(202, 207, 210)','rgb(170, 183, 184)','rgb(153, 163, 164)','rgb(93, 109, 126)','rgb(86, 101, 115)']
     const sizes = [36,37,38,39,40,41,42,43,44,45]
     const [list_item, setList_item] = useState([])
+    const [isLoad, setIsLoad] = useContext(Context)
 
     const cleanInput = () => {
         document.querySelector('#import-product-page .txt-id').value = ''
@@ -159,6 +161,7 @@ function ImportProductPage({products}) {
         axios.post('/orders/insert-order-import', {list_item : list_item, note: note, date: date}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data == true) {
+                    setIsLoad(!isLoad)
                     cleanAll()
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'Create Coupon Successful'})}, 50);

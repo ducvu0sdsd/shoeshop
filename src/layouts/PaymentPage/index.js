@@ -70,6 +70,8 @@ function PaymentPage({user1}) {
         let note = document.querySelector('#payment-page .txt-note').value
         let method = document.querySelector('input[name="payment"]:checked').value
         let colorsizes = products.map(p => ({ color: p.color, size: p.size, quantity: parseInt(p.quantityProduct) - parseInt(p.quantity), quantityOrder : parseInt(p.quantity), product_id : p.id }));
+        let name = document.querySelector('#payment-page .txt-name').value
+        let email = document.querySelector('#payment-page .txt-email').value
         if (cart) {
             let user_id = user.id
                 axios.post('/payment/order-from-cart-of-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
@@ -102,6 +104,7 @@ function PaymentPage({user1}) {
                     })
             }
         }
+        axios.post('/email/notice-of-successful-order',{name : name, toEmail : email ,products : products},{headers : {'Content-Type': 'application/json'}})
     }
 
     const handleCongratulations = () => {
@@ -155,8 +158,8 @@ function PaymentPage({user1}) {
                     <table>
                         <tr>
                             <td><input type="radio" id="pay-cash" name="payment" value="Cash"/><label htmlFor="pay-cash">Cash</label></td>
-                            <td><input type="radio" id="pay-bank" name="payment" value="Bank Transfer"/><label htmlFor="pay-bank">Bank Transfer</label></td>
-                            <td><input type="radio" id="pay-credit" name="payment" value="Credit and Debit Cards"/><label htmlFor="pay-credit">Credit and Debit Cards</label></td>
+                            {/* <td><input type="radio" id="pay-bank" name="payment" value="Bank Transfer"/><label htmlFor="pay-bank">Bank Transfer</label></td>
+                            <td><input type="radio" id="pay-credit" name="payment" value="Credit and Debit Cards"/><label htmlFor="pay-credit">Credit and Debit Cards</label></td> */}
                         </tr>
                     </table>
                 </div>

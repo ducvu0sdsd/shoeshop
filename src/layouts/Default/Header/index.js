@@ -91,6 +91,19 @@ function Header({user, products}) {
         }
     }
 
+    const cleanInputSignUp = () => {
+        document.querySelector('.username-signup').value = ''
+        document.querySelector('.password-signup').value = ''
+        document.querySelector('.name-signup').value = ''
+        document.querySelector('.email-signup').value = ''
+        document.querySelector('.phone-signup').value = ''
+        document.querySelector('.address-signup').value = ''
+        document.querySelector('.confirm-signup').value = ''
+        document.querySelector('.date-signup').value = ''
+        document.querySelector('.avatar-signup').value = ''
+        document.querySelector('.gender-signup').value = "None"
+    }
+
     const handleCheckInput = () => {
         const username = document.querySelector('.username-signup').value
         const password = document.querySelector('.password-signup').value
@@ -180,6 +193,7 @@ function Header({user, products}) {
                             setNof({status : 'none', message : ""})
                             setTimeout(() => {setNof({status : 'success', message : 'Account Successfully Created'})}, 50);
                             handleChangeSign(0)
+                            cleanInputSignUp()
                         } else {
                             setNof({status : 'none', message : ""})
                             setTimeout(() => {setNof({status : 'fail', message : 'Username or Email is already taken'})}, 50);
@@ -204,6 +218,7 @@ function Header({user, products}) {
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'success', message : 'Account Successfully Created'})}, 50);
                         handleChangeSign(0)
+                        cleanInputSignUp()
                     } else {
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'fail', message : 'Username or Email is already taken'})}, 50);
