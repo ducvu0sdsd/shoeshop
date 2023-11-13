@@ -82,7 +82,7 @@
     & .list-item {
         margin: 0 10px;
         overflow-y: auto;
-        height: 500px;
+        height: 1100px;
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
@@ -91,10 +91,9 @@
 
 
         & .item {
-            margin: 20px;
+            margin: 10px 20px;
             width: 215px;
             height: 300px;
-            // background-color: aqua;
 
             & .image {
                 width: 100%;
