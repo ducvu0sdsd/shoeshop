@@ -19,6 +19,10 @@ function OrderImportStatistics({setOption, orderImports}) {
             return`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`
         }
     }
+
+    useEffect(() => {
+        setOrders(orderImports)
+    }, [orderImports])
     
     useEffect(() => {
         if (currentOrder) {
@@ -55,7 +59,6 @@ function OrderImportStatistics({setOption, orderImports}) {
         let l = []
         orderImports.forEach(item => {
             let currentDate = new Date(item.order_date)
-            console.log(currentDate, date1Value, date2Value)
             if (currentDate>= date1Value && currentDate <= date2Value) {
                 l.push(item)
             }

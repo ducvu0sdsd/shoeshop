@@ -45,7 +45,8 @@ function App() {
 
   useEffect(() => {
     // Get Data about Products
-    axios.get('/products/get-all-product', {headers : {'Content-Type': 'application/json'}})
+    console.log(2222)
+    axios.get('/products', {headers : {'Content-Type': 'application/json'}})
       .then(res => {
           setProducts(res.data)
           data.setProducts(res.data)
@@ -81,7 +82,7 @@ function App() {
       .then(res => {
           setClients(res.data)
       })
-  }, [isload])
+  }, [isload.client])
 
 
   useEffect(() => {
@@ -91,7 +92,7 @@ function App() {
         let token = 'Bearer ' + t;
         
         // Get Data about Account
-        axios.get(`/account/get-account?username=${username}`, {headers : {Authorization : token, 'Content-Type': 'application/json'}}) 
+        axios.get(`/accounts/get-account?username=${username}`, {headers : {Authorization : token, 'Content-Type': 'application/json'}}) 
             .then(res => {
                 if (res.data != "") {
                   setUser(res.data)
@@ -102,7 +103,7 @@ function App() {
                 }
             })
     }
-  }, [isload])
+  }, [isload.user])
 
   useEffect(() => {
     // Get Data about Brands
@@ -110,15 +111,15 @@ function App() {
     .then(res => {
         setBrands(res.data)
     })
-  }, [isload])
+  }, [isload.brand])
 
   useEffect(() => {
     let token = 'Bearer ' + localStorage.getItem("token")
-    axios.get('/supplier/get-all-suppliers', {headers : {Authorization : token, 'Content-Type': 'application/json'}})
+    axios.get('/suppliers/get-all-suppliers', {headers : {Authorization : token, 'Content-Type': 'application/json'}})
         .then(res=> {
             setSuppliers(res.data)
         })
-  }, [isload])
+  }, [isload.supplier])
 
   useEffect(() => {
     let token = 'Bearer ' + localStorage.getItem("token")
@@ -126,7 +127,7 @@ function App() {
         .then(res=> {
             setOrderBuys(res.data)
         })
-  }, [isload])
+  }, [isload.orderbuy])
 
   useEffect(() => {
     let token = 'Bearer ' + localStorage.getItem("token")
@@ -134,7 +135,7 @@ function App() {
         .then(res=> {
           setOrderImports(res.data)
         })
-  }, [isload])
+  }, [isload.orderimport])
 
 
   return (

@@ -177,11 +177,11 @@ function Header({user, products}) {
             let render = new FileReader()
             render.onload = (e) => {
                 image = e.target.result
-                axios.post('/account/sign-up',{username : username, password : password,name : name, email : email, phone : phone, address : address, date : date, gender : gender ,avatar : image,admin : false}, {headers: {'Content-Type': 'application/json'}})
+                axios.post('/accounts/sign-up',{username : username, password : password,name : name, email : email, phone : phone, address : address, date : date, gender : gender ,avatar : image,admin : false}, {headers: {'Content-Type': 'application/json'}})
                     .then(res => {
                         handleCleanVerify()
-                        if (res.data == true){
-                            axios.post('/email/notice-of-successful-account-creation', 
+                        if (res.data == 200){
+                            axios.post('/emails/notice-of-successful-account-creation', 
                             {
                                 toEmail : email,
                                 username : username,
@@ -202,11 +202,11 @@ function Header({user, products}) {
             }
             render.readAsDataURL(document.querySelector('.avatar-signup').files[0])
         } else {
-            axios.post('/account/sign-up',{username : username, password : password,name : name, email : email, phone : phone, address : address, date : date, gender : gender ,avatar : image,admin : false}, {headers: {'Content-Type': 'application/json'}})
+            axios.post('/accounts/sign-up',{username : username, password : password,name : name, email : email, phone : phone, address : address, date : date, gender : gender ,avatar : image,admin : false}, {headers: {'Content-Type': 'application/json'}})
                 .then(res => {
                     handleCleanVerify()
-                    if (res.data == true){
-                        axios.post('/email/notice-of-successful-account-creation', 
+                    if (res.data == 200){
+                        axios.post('/emails/notice-of-successful-account-creation', 
                             {
                                 toEmail : email,
                                 username : username,
@@ -230,16 +230,21 @@ function Header({user, products}) {
     const handleSignIn = () => {
         const username = document.querySelector('.username-signin').value
         const password = document.querySelector('.password-signin').value
-        axios.post('/account/sign-in',{username : username, password : password}, {headers: {'Content-Type': 'application/json'}})
+        axios.post('/accounts/sign-in',{username : username, password : password}, {headers: {'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data) {
-                    setNof({status : 'none', message : ""})
-                    setTimeout(() => {setNof({status : 'success', message : 'Sign In Successfully'})}, 50);
-                    localStorage.setItem('token', res.data.re.body.token)
-                    localStorage.setItem('username', res.data.user.username)
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 2000)
+                    if (res.data.status == 200) {
+                        setNof({status : 'none', message : ""})
+                        setTimeout(() => {setNof({status : 'success', message : 'Sign In Successfully'})}, 50);
+                        localStorage.setItem('token', res.data.responseData.re.body.token)
+                        localStorage.setItem('username', res.data.responseData.user.username)
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000)
+                    } else {
+                        setNof({status : 'none', message : ""})
+                        setTimeout(() => {setNof({status : 'fail', message : 'Login information is incorrect'})}, 50);
+                    }
                 } else {
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'fail', message : 'Login information is incorrect'})}, 50);
@@ -311,14 +316,14 @@ function Header({user, products}) {
     const handleValidateInputSignUp = () => {
         if (!handleCheckInput()) return
         const email = document.querySelector('.email-signup').value
-        axios.post('/email/verify-email', {toEmail : email},  {headers: {'Content-Type': 'application/json'}})
+        axios.post('/emails/verify-email', {toEmail : email},  {headers: {'Content-Type': 'application/json'}})
             .then(res => {
                 setCode(res.data)
                 handleCleanVerify()
                 handleChangeSign(-1350)
             })
     }
-
+    
     return (
         <div id='header' className='col-lg-12'>
             <Notification status={nof.status} message={nof.message}/>

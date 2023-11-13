@@ -78,13 +78,11 @@ function ShoesDetail({product, products, user}) {
             })
             setListImage(l)
         }
-    },[load])
+    },[load, product])
     const imageRef = useRef()
 
     const handleChangeImage = (num) => {
         document.querySelector('.shoes-detail .list').style.transform = `translateX(${imageRef.current.offsetWidth * num * -1}px)`
-        document.querySelector('.shoes-detail .active').classList.remove('active')
-        document.querySelector(`.shoes-detail .item${num}`).classList.add('active')
     }
 
     const handleOptionSize = (e) => {
@@ -216,13 +214,12 @@ function ShoesDetail({product, products, user}) {
         if (user) {
             handleMoveItem()
             data.setCarts([...data.carts,{product, colorsize : currentProduct, quantity : quantity}])
-            axios.post('/cart/insert-cart', {user_id : user.id, color : currentProduct.color, size : currentProduct.size, quantity : quantity}, {headers : {'Content-Type': 'application/json'}})
+            axios.post('/carts/insert-cart', {user_id : user.id, color : currentProduct.color, size : currentProduct.size, quantity : quantity}, {headers : {'Content-Type': 'application/json'}})
                 .then(res => {
                     if (res.data == true) {
                         let l = []
-                        axios.get('/cart/get-all-cart-by-user?user_id='+user.id, {headers : {'Content-Type': 'application/json'}})
+                        axios.get('/carts/get-all-cart-by-user?user_id='+user.id, {headers : {'Content-Type': 'application/json'}})
                             .then (res => {
-                                console.log(res.data)
                                 res.data.forEach(item => {
                                     products.forEach(item1 => {
                                         if (item1.id == item.colorSize.product.id) {
@@ -239,7 +236,10 @@ function ShoesDetail({product, products, user}) {
                             })
                     }
                 })
-            setIsLoad(!isLoad)
+            setIsLoad({...isLoad, cart : !isLoad.cart})
+        }else {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : 'Please log in to your account before adding to cart'})}, 50);
         }
     }
 
@@ -253,7 +253,11 @@ function ShoesDetail({product, products, user}) {
                     </div>
                 </div>
                 <div className='mini-images'>
-                    {listImage.map((item, index) => (<div onClick={() => handleChangeImage(index)} key={index} className={index == 0 ? `item${index} item active` : `item item${index}`}>
+                    {listImage.map((item, index) => (<div onClick={() => {
+                        handleChangeImage(index)
+                        document.querySelector('.shoes-detail .mini-images .active').classList.remove('active')
+                        document.querySelector('.shoes-detail .mini-images .item'+index).classList.add('active')
+                    }} key={index} className={index == 0 ? `item${index} item active` : `item item${index}`}>
                         <img src={item} width='95%'/>
                     </div>))}
                 </div>

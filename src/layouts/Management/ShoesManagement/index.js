@@ -157,7 +157,7 @@ function ProductManagement({brands, products1, suppliers}) {
                     if (res.data == true) {
                         console.log(res.data)
                         cleanInput()
-                        setIsLoad(!isLoad)
+                        setIsLoad({...isLoad, product : !isLoad.product})
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'success', message : 'Product Insertion Successful'})}, 50);
                     } else {
@@ -185,7 +185,7 @@ function ProductManagement({brands, products1, suppliers}) {
                 .then(res => {
                     if (res.data == true) {
                         cleanInput()
-                        setIsLoad(!isLoad)
+                        setIsLoad({...isLoad, product : !isLoad.product})
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'success', message : 'Product Update Successful'})}, 50);
                     } else {
@@ -205,7 +205,7 @@ function ProductManagement({brands, products1, suppliers}) {
                 .then(res => {
                     if (res.data == true) {
                         cleanInput()
-                        setIsLoad(!isLoad)
+                        setIsLoad({...isLoad, product : !isLoad.product})
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'success', message : 'Product Delete Successful'})}, 50);
                     } else {

@@ -60,7 +60,7 @@ function ClientsManagement({clients}) {
                 if (res.data == true) {
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'Update A Sucessful Client'})}, 50);
-                    setIsLoad(!isLoad)
+                    setIsLoad({...isLoad, client: !isLoad.client})
                     cleanInput()
                 } else {
                     setNof({status : 'none', message : ""})
@@ -77,7 +77,7 @@ function ClientsManagement({clients}) {
                 if (res.data == true) {
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'Delete A Sucessful Client'})}, 50);
-                    setIsLoad(!isLoad)
+                    setIsLoad({...isLoad, client: !isLoad.client})
                     cleanInput()
                 } else {
                     setNof({status : 'none', message : ""})
@@ -89,7 +89,7 @@ function ClientsManagement({clients}) {
     const handleLinkToOrdersOfCustomer = () => {
         customer_name = document.querySelector('#client-management .txt-name').value
         localStorage.setItem('customer_name', customer_name)
-        navigate('/account/sales-management')
+        navigate('/accounts/sales-management')
     }
 
     return (

@@ -15,7 +15,7 @@ function PasswordPage({user}) {
         let t = localStorage.getItem("token")
         let username = localStorage.getItem("username")
         let token = 'Bearer ' + t;
-        axios.post('/account/delete-account', {username : username} ,{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        axios.post('/accounts/delete-account', {username : username} ,{headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data == true) {
                     setNof({status : 'none', message : ""})
@@ -39,7 +39,7 @@ function PasswordPage({user}) {
             let t = localStorage.getItem("token")
             let username = localStorage.getItem("username")
             let token = 'Bearer ' + t;
-            axios.put('/account/update-password-account',{username : username, oldpass : oldpass, newpass : newpass},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+            axios.put('/accounts/update-password-account',{username : username, oldpass : oldpass, newpass : newpass},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
                 .then(res => {
                     if(res.data == true) {
                         setNof({status : 'none', message : ""})
@@ -47,7 +47,7 @@ function PasswordPage({user}) {
                         document.querySelector('.txt-passold').value = ""
                         document.querySelector('.txt-passnew').value = ""
                         document.querySelector('.txt-repassnew').value = ""
-                        setIsLoad(!isLoad)
+                        setIsLoad({...isLoad, user : !isLoad.user})
                     } else {
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'fail', message : 'Password Update Failed'})}, 50);

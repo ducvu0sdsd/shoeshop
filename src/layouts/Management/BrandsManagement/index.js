@@ -43,7 +43,7 @@ function BrandsManagement({brands}) {
                     if (res.data == true) {
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'success', message : 'Add A Successful Brand'})}, 50);
-                        setIsLoad(!isLoad)
+                        setIsLoad({...isLoad, brand : !isLoad.brand})
                         cleanInput()
                     } else {
                         setNof({status : 'none', message : ""})
@@ -66,7 +66,7 @@ function BrandsManagement({brands}) {
                     if (res.data == true) {
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'success', message : 'Remove A Successful Brand'})}, 50);
-                        setIsLoad(!isLoad)
+                        setIsLoad({...isLoad, brand : !isLoad.brand})
                         cleanInput()
                     }
                 })
@@ -91,7 +91,7 @@ function BrandsManagement({brands}) {
                         if (res.data == true) {
                             setNof({status : 'none', message : ""})
                             setTimeout(() => {setNof({status : 'success', message : 'Update A Successful Brand'})}, 50);
-                            setIsLoad(!isLoad)
+                            setIsLoad({...isLoad, brand : !isLoad.brand})
                             cleanInput()
                         } else {
                             setNof({status : 'none', message : ""})

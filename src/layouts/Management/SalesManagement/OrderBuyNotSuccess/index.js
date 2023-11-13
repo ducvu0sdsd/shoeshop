@@ -71,7 +71,7 @@ function OrderBuyNotSuccess({setOption, orderBuys, isLoad, setIsLoad}) {
                         if (res.data == true) {
                             setNof({status : 'none', message : ""})
                             setTimeout(() => {setNof({status : 'success', message : 'Updating Successful'})}, 50);
-                            setIsLoad(!isLoad)
+                            setIsLoad({...isLoad, orderbuy : !isLoad.orderbuy})
                         }
                     })
             } else {

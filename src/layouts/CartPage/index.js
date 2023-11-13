@@ -4,7 +4,7 @@ import './cartpage.scss'
 import {Context} from '../../components/UseContext/ThemeContext'
 import axios from 'axios';
 import Notification from '../../components/Notification';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function CartPage() {
     const [nof, setNof] = useState({status : 'none', message : 'none'})
@@ -39,6 +39,7 @@ function CartPage() {
                 id = cart.id
                 user_id = cart.user.id
                 colorsize_id = cart.colorsize.id
+                console.log(cart)
                 if (type == '+') {
                     if (cart.quantity == cart.colorsize.quantity) {
                         setNof({status : 'none', message : ""})
@@ -50,7 +51,7 @@ function CartPage() {
                     if (cart.quantity == 1) {
                         cart.quantity = 0
                         l = l.filter(item => item.id != cart.id)
-                        axios.post('/cart/delete-cart-by-id', {user_id : user_id, colorsize_id : colorsize_id}, {headers : {'Content-Type': 'application/json'}})
+                        axios.post('/carts/delete-cart-by-id', {user_id : user_id, colorsize_id : colorsize_id}, {headers : {'Content-Type': 'application/json'}})
                     } else {
                         cart.quantity = cart.quantity - 1
                     }
@@ -61,12 +62,13 @@ function CartPage() {
         setCarts(l)
         setLoad(!load)
         setIsLoad(!isLoad)
-        axios.put('/cart/update-quantity-by-id', {user_id : user_id, colorsize_id : colorsize_id, quantity : quantity}, {headers : {'Content-Type': 'application/json'}})
+        console.log(user_id, colorsize_id, quantity)
+        axios.put('/carts/update-quantity-by-id', {user_id : user_id, colorsize_id : colorsize_id, quantity : quantity}, {headers : {'Content-Type': 'application/json'}})
     }
 
     const handleDeleteCart = (user_id, colorsize_id) => {
         let l = carts
-        axios.post('/cart/delete-cart-by-id', {user_id : user_id, colorsize_id : colorsize_id}, {headers : {'Content-Type': 'application/json'}})
+        axios.post('/carts/delete-cart-by-id', {user_id : user_id, colorsize_id : colorsize_id}, {headers : {'Content-Type': 'application/json'}})
         l = l.filter(item => (item.user.id != user_id && item.colorsize.id != colorsize_id))
         setCarts(l)
         setLoad(!load)
@@ -90,7 +92,7 @@ function CartPage() {
             {carts.length == 0 ? 
                 <div className='form-not-cart'>
                     There are no products in the cart yet.
-                    <button>Return To The Store</button>
+                    <Link to={'/categories/sneakers/vans'}><button>Return To The Store</button></Link>
                 </div> 
             : <>
                 <div className='list-product-area col-lg-7'>
@@ -134,7 +136,7 @@ function CartPage() {
                             </div>
                         })}
                     </div>
-                    <button className='btn-view'><i className='bx bx-arrow-back' ></i> Continue Viewing Products</button>
+                    <Link className='link' to={'/categories/sneakers/vans'}><button className='btn-view'><i className='bx bx-arrow-back' ></i> Continue Viewing Products</button></Link>
                 </div>
                 <div className='payment-area col-lg-5'>
                     <div className='title'>Total Cart</div>

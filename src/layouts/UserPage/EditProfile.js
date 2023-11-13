@@ -15,7 +15,7 @@ function EditProfilePage({user}) {
         let t = localStorage.getItem("token")
         let username = localStorage.getItem("username")
         let token = 'Bearer ' + t;
-        axios.post('/account/delete-account', {username : username} ,{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        axios.post('/accounts/delete-account', {username : username} ,{headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data == true) {
                     setNof({status : 'none', message : ""})
@@ -42,10 +42,10 @@ function EditProfilePage({user}) {
             let render = new FileReader()
             render.onload = (e) => {
                 let base64String = e.target.result
-                axios.put('/account/update-avatar-account',{username : username, avatar : base64String},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+                axios.put('/accounts/update-avatar-account',{username : username, avatar : base64String},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
-                            setIsLoad(!isLoad)
+                            setIsLoad({...isLoad, user : !isLoad.user})
                             inputAvatar.value = ""
                             setNof({status : 'none', message : ""})
                             setTimeout(() => {setNof({status : 'success', message : 'Avatar Updated Successfully'})}, 50);
@@ -66,10 +66,10 @@ function EditProfilePage({user}) {
         let t = localStorage.getItem("token")
         let username = localStorage.getItem("username")
         let token = 'Bearer ' + t;
-        axios.put('/account/update-avatar-account',{username : username, avatar : 'default'},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        axios.put('/accounts/update-avatar-account',{username : username, avatar : 'default'},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data == true) {
-                    setIsLoad(!isLoad)
+                    setIsLoad({...isLoad, user : !isLoad.user})
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'Avatar Updated Successfully'})}, 50);
                 } else {
@@ -96,10 +96,10 @@ function EditProfilePage({user}) {
         let t = localStorage.getItem("token")
         let username = localStorage.getItem("username")
         let token = 'Bearer ' + t;
-        axios.put('/account/update-information-account',{username : username, name : txt_name, phone : txt_phonenumber, date : txt_date, address : txt_address, gender : txt_gender},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        axios.put('/accounts/update-information-account',{username : username, name : txt_name, phone : txt_phonenumber, date : txt_date, address : txt_address, gender : txt_gender},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data == true) {
-                    setIsLoad(!isLoad)
+                    setIsLoad({...isLoad, user : !isLoad.user})
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'Information Updated Successfully'})}, 50);
                 } else {

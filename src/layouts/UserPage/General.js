@@ -25,12 +25,12 @@ function GeneralPage({user}) {
         let username = localStorage.getItem("username")
         let token = 'Bearer ' + t;
         let email = document.querySelector('.txt-email').value
-        axios.put('/account/update-email-account', {username : username, email : email} ,{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        axios.put('/accounts/update-email-account', {username : username, email : email} ,{headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if(res.data == true) {
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'Email Updated Successfully'})}, 50);
-                    setIsLoad(!isLoad)
+                    setIsLoad({...isLoad, user : !isLoad.user})
                 } else {
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'fail', message : 'Email Update Failed'})}, 50);
@@ -42,7 +42,7 @@ function GeneralPage({user}) {
         let t = localStorage.getItem("token")
         let username = localStorage.getItem("username")
         let token = 'Bearer ' + t;
-        axios.post('/account/delete-account', {username : username} ,{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+        axios.post('/accounts/delete-account', {username : username} ,{headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data == true) {
                     setNof({status : 'none', message : ""})

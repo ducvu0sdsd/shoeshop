@@ -161,7 +161,7 @@ function ImportProductPage({products}) {
         axios.post('/orders/insert-order-import', {list_item : list_item, note: note, date: date}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then(res => {
                 if (res.data == true) {
-                    setIsLoad(!isLoad)
+                    setIsLoad({...isLoad, orderimport : !isLoad.orderimport, product : !isLoad.product})
                     cleanAll()
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'Create Coupon Successful'})}, 50);
@@ -240,7 +240,8 @@ function ImportProductPage({products}) {
                 <div style={{display : 'flex', justifyContent: 'space-between'}}>
                     <button onClick={() => handleInsertOrder()} type="button" className="btn btn-success">Create</button>
                     <div style={{display : 'flex'}}>
-                        <div className='total'>Total : {list_item.reduce((accumulator, current) => accumulator + parseInt(current.txt_retail_price), 0)} $</div>
+                        {console.log(list_item)}
+                        <div className='total'>Total : {list_item.reduce((accumulator, current) => accumulator + parseInt(current.txt_buy_price) * parseInt(current.txt_quantity), 0)} $</div>
                         <div className='form-group' style={{marginRight : '10px'}}>
                             <input type="date" className="form-control txt-date" />
                         </div>

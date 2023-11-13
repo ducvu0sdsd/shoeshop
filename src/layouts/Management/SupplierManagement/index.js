@@ -62,11 +62,11 @@ function SupplierManagerMent({suppliers}) {
         let data = checkInput();
         if (data != null) {
             const { name, address, phone } = data
-            axios.post('/supplier/insert-supplier', {name : name, address : address, phone : phone}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
+            axios.post('/suppliers/insert-supplier', {name : name, address : address, phone : phone}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then (res => {
                 if (res.data == true) {
                     cleanInput()
-                    setIsLoad(!isLoad)
+                    setIsLoad({...isLoad, supplier : !isLoad.supplier})
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'The Supplier Insertion Successful'})}, 50);
                 } else {
@@ -81,12 +81,12 @@ function SupplierManagerMent({suppliers}) {
         let id = document.querySelector('.txt-id').value;
         if (id != "") {
             let id1 = parseInt(id)
-            axios.post(`/supplier/delete-supplier`, {id : id1},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
+            axios.post(`/suppliers/delete-supplier`, {id : id1},{headers : {Authorization : token, 'Content-Type': 'application/json'}})
                 .then(res => {
                     if (res.data == true) {
                         setNof({status : 'none', message : ""})
                         setTimeout(() => {setNof({status : 'success', message : 'Remove A Successful Brand'})}, 50);
-                        setIsLoad(!isLoad)
+                        setIsLoad({...isLoad, supplier : !isLoad.supplier})
                         cleanInput()
                     }
                 })
@@ -102,11 +102,11 @@ function SupplierManagerMent({suppliers}) {
         if (data != null) {
             let id = document.querySelector('.txt-id').value;
             const { name, address, phone } = data
-            axios.put('/supplier/update-supplier', {id : id, name : name, address : address, phone : phone}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
+            axios.put('/suppliers/update-supplier', {id : id, name : name, address : address, phone : phone}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
             .then (res => {
                 if (res.data == true) {
                     cleanInput()
-                    setIsLoad(!isLoad)
+                    setIsLoad({...isLoad, supplier : !isLoad.supplier})
                     setNof({status : 'none', message : ""})
                     setTimeout(() => {setNof({status : 'success', message : 'The Supplier Updated Successful'})}, 50);
                 } else {

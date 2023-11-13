@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 function Provider({children}) {
 
-    const [isload, setIsLoad] = useState(false);
+    const [isload, setIsLoad] = useState({product : false, client : false, user : false, brand : false, supplier : false, orderbuy : false, orderimport : false, cart : false});
     const [user, setUser] = useState(null)
     const [payload, setPayload] = useState([])
     const [carts, setCarts] = useState([])
@@ -12,7 +12,7 @@ function Provider({children}) {
 
     useEffect(() => {
         if (user && products.length != 0) {
-            axios.get('/cart/get-all-cart-by-user?user_id='+user.id, {headers : {'Content-Type': 'application/json'}})
+            axios.get('/carts/get-all-cart-by-user?user_id='+user.id, {headers : {'Content-Type': 'application/json'}})
             .then (res => {
                 let l = []
                 res.data.forEach(item => {
@@ -20,8 +20,9 @@ function Provider({children}) {
                         if (item1.id == item.colorSize.product.id) {
                             l.push({
                                 id : item.id,
+                                user : user,
                                 product : item.colorSize.product,
-                                colorsize : {color : item.colorSize.color, size : item.colorSize.size, price : item.colorSize.retailPrice, quantity : item.colorSize.quantity},
+                                colorsize : {id: item.colorSize.id, color : item.colorSize.color, size : item.colorSize.size, price : item.colorSize.retailPrice, quantity : item.colorSize.quantity},
                                 quantity : item.quantity,
                                 image : item1.images[0].image
                             })
@@ -31,7 +32,7 @@ function Provider({children}) {
                 setCarts(l)
             })
         }
-    }, [user])
+    }, [user, isload.cart])
 
     let customer_name = ''
     let data = {

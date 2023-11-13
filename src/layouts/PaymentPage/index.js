@@ -74,7 +74,7 @@ function PaymentPage({user1}) {
         let email = document.querySelector('#payment-page .txt-email').value
         if (cart) {
             let user_id = user.id
-                axios.post('/payment/order-from-cart-of-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
+                axios.post('/payments/order-from-cart-of-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
                             handleCongratulations()
@@ -83,7 +83,7 @@ function PaymentPage({user1}) {
         } else {
             if (user) {
                 let user_id = user.id
-                axios.post('/payment/order-from-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
+                axios.post('/payments/order-from-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
                             handleCongratulations()
@@ -94,7 +94,7 @@ function PaymentPage({user1}) {
                 let txtphone = document.querySelector('#payment-page .txt-phone').value
                 let txtemail = document.querySelector('#payment-page .txt-email').value
                 let txtaddress = document.querySelector('#payment-page .txt-address').value
-                axios.post('/payment/order-from-guest',
+                axios.post('/payments/order-from-guest',
                     {note : note, method : method, address : txtaddress, name : txtname, email : txtemail, phone : txtphone, colorsizes : colorsizes},
                     {headers : {'Content-Type': 'application/json'}})
                     .then(res => {
@@ -104,13 +104,13 @@ function PaymentPage({user1}) {
                     })
             }
         }
-        axios.post('/email/notice-of-successful-order',{name : name, toEmail : email ,products : products},{headers : {'Content-Type': 'application/json'}})
+        axios.post('/emails/notice-of-successful-order',{name : name, toEmail : email ,products : products},{headers : {'Content-Type': 'application/json'}})
     }
 
     const handleCongratulations = () => {
         const form = document.querySelector('.form-congratulation')
         const opa = document.querySelector('#payment-page .opa')
-        setIsLoad(!isload)
+        setIsLoad({...isload, orderbuy : !isload.orderbuy, product : !isload.product})
         setNof({status : 'none', message : ""})
         setTimeout(() => {setNof({status : 'success', message : 'Order successful, if you have any other comments, please contact 0902491471'})}, 50);
         opa.style.display = 'block'
