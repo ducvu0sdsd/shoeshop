@@ -16,6 +16,7 @@ function PaymentPage({user1}) {
     const {cart} = useParams()
     const [nof, setNof] = useState({status : 'none', message : 'none'})
     const [products, setProducts] = useState([])
+    const [shipMoney, setShipMoney] = useState(0)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -52,6 +53,11 @@ function PaymentPage({user1}) {
             setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Choose Payment Method'})}, 50);
             return false;
         }
+        if (!document.querySelector('input[name="shipping"]:checked')) {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Choose Shipping Method'})}, 50);
+            return false;
+        }
         return true;
     }
 
@@ -74,7 +80,7 @@ function PaymentPage({user1}) {
         let email = document.querySelector('#payment-page .txt-email').value
         if (cart) {
             let user_id = user.id
-                axios.post('/payments/order-from-cart-of-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
+                axios.post('/payments/order-from-cart-of-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes, shippingPrice : shipMoney},{headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
                             handleCongratulations()
@@ -83,7 +89,7 @@ function PaymentPage({user1}) {
         } else {
             if (user) {
                 let user_id = user.id
-                axios.post('/payments/order-from-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes},{headers : {'Content-Type': 'application/json'}})
+                axios.post('/payments/order-from-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes, shippingPrice : shipMoney},{headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
                             handleCongratulations()
@@ -95,7 +101,7 @@ function PaymentPage({user1}) {
                 let txtemail = document.querySelector('#payment-page .txt-email').value
                 let txtaddress = document.querySelector('#payment-page .txt-address').value
                 axios.post('/payments/order-from-guest',
-                    {note : note, method : method, address : txtaddress, name : txtname, email : txtemail, phone : txtphone, colorsizes : colorsizes},
+                    {note : note, method : method, address : txtaddress, name : txtname, email : txtemail, phone : txtphone, colorsizes : colorsizes, shippingPrice : shipMoney},
                     {headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
@@ -157,9 +163,19 @@ function PaymentPage({user1}) {
                     <label>Payment Methods *</label>
                     <table>
                         <tr>
-                            <td><input type="radio" id="pay-cash" name="payment" value="Cash"/><label htmlFor="pay-cash">Cash</label></td>
+                            <td><input type="radio" id="pay-cash" name="payment" value="Cash"/><label htmlFor="pay-cash"><i className="fa-solid fa-money-bill"></i> Cash</label></td>
                             {/* <td><input type="radio" id="pay-bank" name="payment" value="Bank Transfer"/><label htmlFor="pay-bank">Bank Transfer</label></td>
                             <td><input type="radio" id="pay-credit" name="payment" value="Credit and Debit Cards"/><label htmlFor="pay-credit">Credit and Debit Cards</label></td> */}
+                        </tr>
+                    </table>
+                </div>
+                <div className='col-lg-6 form-input'>
+                    <label>Shipping Methods *</label>
+                    <table>
+                        <tr>
+                            <td><input onClick={() => setShipMoney(3.35)} type="radio" id="pay-cash" name="shipping" value="Express"/><label htmlFor="pay-cash"><i className="fa-solid fa-rocket"></i> Express Delivery (about 1 - 3 hours)</label></td>
+                            <td><input onClick={() => setShipMoney(1.95)} type="radio" id="pay-cash" name="shipping" value="Super"/><label htmlFor="pay-cash"><i className="fa-solid fa-truck-fast"></i> Super fast delivery (about 1 - 2 days)</label></td>
+                            <td><input onClick={() => setShipMoney(1.35)} type="radio" id="pay-cash" name="shipping" value="Economical"/><label htmlFor="pay-cash"><i className="fa-solid fa-truck"></i> Economical Delivery (about 3 - 5 days)</label></td>
                         </tr>
                     </table>
                 </div>
@@ -187,9 +203,19 @@ function PaymentPage({user1}) {
                             })
                         :<></>}
                     </div>
+                    <div className='col-lg-12 other-area'>
+                        <h6 className='col-lg-10' style={{textAlign : 'start', paddingLeft: "10px"}}>Provisional</h6>
+                        <h6 className='col-lg-2' style={{textAlign : 'end', paddingRight: "10px"}}>$ {products.reduce((total, current) => {return total + (current.price * parseInt(current.quantity))}, 0)}
+                        </h6>
+                    </div>
+                    <div className='col-lg-12 total-area'>
+                        <h6 className='col-lg-10' style={{textAlign : 'start', paddingLeft: "10px"}}>Delivery Money</h6>
+                        <h6 className='col-lg-2' style={{textAlign : 'end', paddingRight: "10px"}}>$ {shipMoney}
+                        </h6>
+                    </div>
                     <div className='col-lg-12 total-area'>
                         <h6 className='col-lg-10' style={{textAlign : 'start', paddingLeft: "10px"}}>Total</h6>
-                        <h6 className='col-lg-2' style={{textAlign : 'end', paddingRight: "10px"}}>$ {products.reduce((total, current) => {return total + (current.price * parseInt(current.quantity))}, 0)}
+                        <h6 className='col-lg-2' style={{textAlign : 'end', paddingRight: "10px"}}>$ {products.reduce((total, current) => {return total + (current.price * parseInt(current.quantity))}, 0) + shipMoney}
                         </h6>
                     </div>
                     <button onClick={() => handleOrderWithAccount()} type="button" className="btn btn-success">Order Now !!!</button>

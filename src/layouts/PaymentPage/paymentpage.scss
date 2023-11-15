@@ -57,6 +57,7 @@
 
         & .products-area{
             border-top: 2px solid #dedede;
+            border-bottom: 2px solid #dedede;
             padding: 0 10px;
 
             & .product-item {
@@ -87,12 +88,20 @@
         }
 
         & .total-area {
-            border-top: 2px solid #dedede;
             display: flex;
             justify-content: space-between;
-            height: 50px;
+            height: 30px;
             align-items: center;
             padding-right: 20px;
+        }
+
+        & .other-area {
+            display: flex;
+            justify-content: space-between;
+            height: 30px;
+            align-items: center;
+            padding-right: 20px;
+            margin-top: 10px;
         }
 
         & button {

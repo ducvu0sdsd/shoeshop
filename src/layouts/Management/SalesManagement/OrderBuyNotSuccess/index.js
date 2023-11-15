@@ -192,19 +192,19 @@ function OrderBuyNotSuccess({setOption, orderBuys, isLoad, setIsLoad}) {
                                             <td>{
                                                 (order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0)).toFixed(2)
+                                                  }, 0) + order.shipping_price).toFixed(2)
                                                 } $</td>
                                             <td>{
-                                                (order.order_items.reduce((total, current) => {
+                                                ((order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0) * 0.05).toFixed(2)
+                                                  }, 0) + order.shipping_price) * 0.05).toFixed(2)
                                                 } $</td>
                                             <td>{
-                                                (order.order_items.reduce((total, current) => {
+                                                ((order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0) - order.order_items.reduce((total, current) => {
+                                                  }, 0)+ order.shipping_price )- (order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0) * 0.05).toFixed(2)
+                                                  }, 0)+ order.shipping_price )* 0.05).toFixed(2)
                                                 } $</td>
                                             <td
                                                 style={{fontWeight : 'bold',color : order.order_status == 'Waiting for delivery' ? '#E79700' : order.order_status == 'Being transported' ? '#0080EB' : 'green'}}

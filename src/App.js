@@ -45,7 +45,6 @@ function App() {
 
   useEffect(() => {
     // Get Data about Products
-    console.log(2222)
     axios.get('/products', {headers : {'Content-Type': 'application/json'}})
       .then(res => {
           setProducts(res.data)

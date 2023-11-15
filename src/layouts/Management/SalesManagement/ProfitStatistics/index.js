@@ -4,6 +4,8 @@ import Notification from '../../../../components/Notification'
 
 function ProfitStatistics({setOption, orderBuys, customer_name = ''}) {
 
+    console.log(orderBuys)
+
     const [currentOrder, setCurrentOrder] = useState(null)
     const [nof, setNof] = useState({status : 'none', message : 'none'})
     const [orders, setOrders] = useState([])
@@ -207,23 +209,23 @@ function ProfitStatistics({setOption, orderBuys, customer_name = ''}) {
                                         {(orders.reduce((final, cur) => {
                                             return final + (cur.order_items.reduce((total, current) => {
                                                 return total + current.order_item.quantity * current.order_item.retail_price;
-                                              }, 0))
+                                              }, 0) + cur.shipping_price)
                                         },0)).toFixed(2)} $</th>
                                     <th style={{padding : "0 10px", fontSize : '15px'}}>
                                         {(orders.reduce((final, cur) => {
                                             return final + (cur.order_items.reduce((total, current) => {
                                                 return total + current.order_item.quantity * current.order_item.retail_price;
-                                              }, 0))
+                                              }, 0) + cur.shipping_price)
                                         },0) * 0.05).toFixed(2)} $</th>
                                     <th style={{padding : "0 10px", fontSize : '15px'}}>
                                         {(orders.reduce((final, cur) => {
                                             return final + (cur.order_items.reduce((total, current) => {
                                                 return total + current.order_item.quantity * current.order_item.retail_price;
-                                              }, 0))
+                                              }, 0) + cur.shipping_price)
                                         },0) - orders.reduce((final, cur) => {
                                             return final + (cur.order_items.reduce((total, current) => {
                                                 return total + current.order_item.quantity * current.order_item.retail_price;
-                                              }, 0))
+                                              }, 0) + cur.shipping_price)
                                         },0) * 0.05).toFixed(2)} $</th>
                                     <th style={{padding : "0 10px", fontSize : '15px'}}>
                                         {(orders.reduce((final, cur) => {
@@ -235,11 +237,11 @@ function ProfitStatistics({setOption, orderBuys, customer_name = ''}) {
                                         {(orders.reduce((final, cur) => {
                                             return final + (cur.order_items.reduce((total, current) => {
                                                 return total + current.order_item.quantity * current.order_item.retail_price;
-                                              }, 0))
+                                              }, 0) + cur.shipping_price)
                                         },0) - orders.reduce((final, cur) => {
                                             return final + (cur.order_items.reduce((total, current) => {
                                                 return total + current.order_item.quantity * current.order_item.retail_price;
-                                              }, 0))
+                                              }, 0) + cur.shipping_price)
                                         },0) * 0.05 - orders.reduce((final, cur) => {
                                             return final + (cur.order_items.reduce((total, current) => {
                                                 return total + current.order_item.quantity * current.order_item.import_price;
@@ -263,19 +265,19 @@ function ProfitStatistics({setOption, orderBuys, customer_name = ''}) {
                                             <td>{
                                                 (order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0)).toFixed(2)
+                                                  }, 0) + order.shipping_price).toFixed(2)
                                                 } $</td>
                                             <td>{
-                                                (order.order_items.reduce((total, current) => {
+                                                ((order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0) * 0.05).toFixed(2)
+                                                  }, 0) + order.shipping_price ) * 0.05).toFixed(2)
                                                 } $</td>
                                             <td>{
-                                                (order.order_items.reduce((total, current) => {
+                                                ((order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0) - order.order_items.reduce((total, current) => {
+                                                  }, 0) + order.shipping_price) - (order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0) * 0.05).toFixed(2)
+                                                  }, 0)+ order.shipping_price ) * 0.05).toFixed(2)
                                                 } $</td>
                                             <td>{
                                                 order.order_items.reduce((total, current) => {
@@ -283,11 +285,11 @@ function ProfitStatistics({setOption, orderBuys, customer_name = ''}) {
                                                   }, 0).toFixed(2)
                                                 } $</td>
                                             <td>{
-                                                (order.order_items.reduce((total, current) => {
+                                                ((order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0) - order.order_items.reduce((total, current) => {
+                                                  }, 0)+ order.shipping_price )- (order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.retail_price;
-                                                  }, 0) * 0.05 - order.order_items.reduce((total, current) => {
+                                                  }, 0)+ order.shipping_price ) * 0.05 - order.order_items.reduce((total, current) => {
                                                     return total + current.order_item.quantity * current.order_item.import_price;
                                                   }, 0)).toFixed(2)
                                                 } $</td>
