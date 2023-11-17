@@ -64,6 +64,7 @@ function ShoesDetail({product, products, user}) {
             document.querySelectorAll('.shoes-detail .active').forEach(item => {
                 item.classList.remove('active')
             })
+            document.querySelector('.shoes-detail .mini-images .item0').classList.add('active')
             document.querySelector('.sizes .btn-clean').style.display = 'none'
             document.querySelector('.colors .btn-clean').style.display = 'none'
             setlColors([])
