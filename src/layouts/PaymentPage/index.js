@@ -2,7 +2,7 @@
 
 import './paymentpage.scss'
 import { Context } from '../../components/UseContext/ThemeContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Notification from '../../components/Notification'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -18,6 +18,7 @@ function PaymentPage({user1}) {
     const [products, setProducts] = useState([])
     const [shipMoney, setShipMoney] = useState(0)
     const navigate = useNavigate()
+    const timeout = useRef()
 
     useEffect(() => {
         setProducts(data.payload)
@@ -83,6 +84,7 @@ function PaymentPage({user1}) {
                 axios.post('/payments/order-from-cart-of-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes, shippingPrice : shipMoney},{headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
+                            setIsLoad({...isload, cart : !isload.cart})
                             handleCongratulations()
                         }
                     })
@@ -92,6 +94,7 @@ function PaymentPage({user1}) {
                 axios.post('/payments/order-from-client',{note : note, method : method, user_id : user_id, colorsizes : colorsizes, shippingPrice : shipMoney},{headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
+                            setIsLoad({...isload, cart : !isload.cart})
                             handleCongratulations()
                         }
                     })
@@ -105,6 +108,7 @@ function PaymentPage({user1}) {
                     {headers : {'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
+                            setIsLoad({...isload, cart : !isload.cart})
                             handleCongratulations()
                         }
                     })
@@ -121,6 +125,16 @@ function PaymentPage({user1}) {
         setTimeout(() => {setNof({status : 'success', message : 'Order successful, if you have any other comments, please contact 0902491471'})}, 50);
         opa.style.display = 'block'
         form.style.top = '150px'
+        timeout.current = setTimeout(() => {
+            handleNavigateToHome()
+        }, 4500)
+    }
+
+    const handleNavigateToHome= () => {
+        clearTimeout(timeout.current)
+        navigate('/categories/customs/all')
+        setTimeout(() => window.location.reload(), 300)
+
     }
 
     const handleCloseForm = () => {
@@ -133,12 +147,12 @@ function PaymentPage({user1}) {
     return (
         <div id='payment-page' className='col-lg-12'>
             <Notification status={nof.status} message={nof.message}/>
-            <Link to={'/categories/sneakers/vans'}><div className='opa' onClick={() => handleCloseForm()}></div></Link>
+            <div className='opa' onClick={() => {handleCloseForm(); handleNavigateToHome()}}></div>
             <div className='form-congratulation'>
                 <div className='title'>Thank you {document.querySelector('#payment-page .txt-name') ? document.querySelector('#payment-page .txt-name').value : ''} for your successful order !!!</div>
                 <img width={'50%'} src={imageSuccess}/>
                 <div className='message'>We will call you soon. But if you have any questions, please contact us by phone number 0902491471</div>
-                <div><Link to={'/categories/sneakers/vans'}>See more other products</Link></div>
+                <div onClick={() => handleNavigateToHome()} style={{textDecoration : 'underline', color : 'blue'}}>See more other products</div>
             </div>
             <div className='col-lg-7 bill-info'>
                 <h4 className='col-lg-12'>Billing Information</h4>

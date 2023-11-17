@@ -19,7 +19,7 @@ function CartPage() {
 
     useEffect(() => {
         setCarts(data.carts)
-    }, [data])
+    }, [data.carts])
 
     useEffect(() => {
         carts.forEach((cart, index) => {

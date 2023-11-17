@@ -29,6 +29,7 @@ function Provider({children}) {
                         }
                     })
                 })
+                console.log(l)
                 setCarts(l)
             })
         }
