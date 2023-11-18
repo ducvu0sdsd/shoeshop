@@ -22,11 +22,16 @@ function ShoesDetail({product, products, user}) {
     const [quantityProduct, setQuantityProduct] = useState(0)
     const [currentProduct, setCurrentProduct] = useState(null)
     const [listRecomment, setListRecomment] = useState([])
+    const [feedbacks, setFeedbacks] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
         setListRecomment(products.filter((item) => {return item.id != product.id}))
     }, [products])
+
+    useEffect(() => {
+        setFeedbacks(data.feedbacks)
+    }, [data.feedbacks])
 
     useEffect(() => {
         if (product.sizes) {
@@ -64,7 +69,9 @@ function ShoesDetail({product, products, user}) {
             document.querySelectorAll('.shoes-detail .active').forEach(item => {
                 item.classList.remove('active')
             })
-            document.querySelector('.shoes-detail .mini-images .item0').classList.add('active')
+            if (listImage.length > 0) {
+                document.querySelector('.shoes-detail .mini-images .item0').classList.add('active')
+            }
             document.querySelector('.sizes .btn-clean').style.display = 'none'
             document.querySelector('.colors .btn-clean').style.display = 'none'
             setlColors([])
@@ -244,6 +251,58 @@ function ShoesDetail({product, products, user}) {
         }
     }
 
+    const handleSentMessage = () => {
+        let message = document.querySelector('.user-message').value
+        if (message != "") {
+            let user_id = user.id
+            let product_id = product.id
+            axios.post('/feedbacks', {content : message, user_id : user_id, product_id : product_id} ,{headers : {'Content-Type': 'application/json'}})
+                .then(res => {
+                    data.setFeedbacks([...data.feedbacks, res.data])
+                    document.querySelector('.user-message').value = ''
+                })
+        } else {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Message Before Sending'})}, 50);
+        }
+    }
+
+    const formatTimeAgo = (period) => {
+        const seconds = Math.floor(period / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        const months = Math.floor(days / 30);
+    
+        if (months > 0) {
+            return `${months} month ago`;
+        } else if (days > 0) {
+            return `${days} day ago`;
+        } else if (hours > 0) {
+            return `${hours} hour ago`;
+        } else if (minutes > 0) {
+            return `${minutes} minute ago`;
+        } else {
+            return `${seconds} second ago`;
+        }
+    };
+  
+    const handleFormatDate = (d) => {
+        let now = new Date()
+        let period = now.getTime() - d.getTime()
+        return formatTimeAgo(period);
+    } 
+
+    const handleRemoveMessage = (id) => {
+        axios.post('/feedbacks/' + id, {headers : {'Content-Type': 'application/json'}})
+            .then (res => {
+                if (res.data == true) {
+                    let l = data.feedbacks.filter((item) => item.id != id)
+                    data.setFeedbacks(l)
+                }
+            })
+    }
+
     return (
         <div className='shoes-detail col-lg-12'>
             <Notification status={nof.status} message={nof.message}/>
@@ -363,6 +422,30 @@ function ShoesDetail({product, products, user}) {
                 {product.overview}
                 </div>
             </div>
+            <div className='col-lg-10 overview'>
+                <h4 className='col-lg-12 title'>FeedBack</h4>
+                <div className='col-lg-12 feedbacks' style={{marginTop : '35px'}}>
+                    {feedbacks.length > 0 ? feedbacks.map((feedback, index) => (
+                        <div className='feedback-item' key={index}>
+                            <div className='avatar'>
+                                <img src={feedback.user.avatar} width={"100%"}  />
+                            </div>
+                            <div className='message'>
+                                <span style={{lineHeight : '0', fontSize : '16px', fontWeight : 'bold'}}>{feedback.user.name} <span style={{fontWeight : 500, fontSize : '14px', marginLeft : '5px'}}>{handleFormatDate(new Date(feedback.datetime))}</span></span>
+                                {feedback.content}
+                            </div>
+                            {user?.id == feedback.user?.id ? <i onClick={() => handleRemoveMessage(feedback.id)} style={{fontSize : '25px', cursor : 'pointer'}} className='bx bx-x'></i> : <></>}
+                        </div>
+                    )) : <></>}
+                </div>
+                {user ? <div className='col-lg-12 feedback-user'>   
+                    <div className='avatar'>
+                        <img src={user.avatar} width={"100%"}  />
+                    </div>
+                    <input type="text" className="form-control user-message" placeholder='Your Message'/>
+                    <button onClick={() => handleSentMessage()} type="button" className="btn btn-success">Send</button>
+                </div> : <></>}
+            </div> 
             {listRecomment.length > 0 ? <ListShoe products={listRecomment}/> : <></>}
         </div>
     );
