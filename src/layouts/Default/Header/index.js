@@ -496,7 +496,7 @@ function Header({user, products}) {
                             <input type='password' className='password-signin' />
                         </div>
                         <button className='btn-signin btn-action' onClick={() => handleSignIn()} >SIGN IN</button>
-                        <p className='forgot'>Forgot Password?</p>
+                        <Link onClick={() => handleShowModal()} style={{color : 'black'}} to={'/forgot-password-page'}><p className='forgot'>Forgot Password?</p></Link> 
                         <p className='have'>Don't have an account? <span onClick={() => handleChangeSign(-450)} style={{cursor:'pointer',fontWeight : 'bold', fontFamily: 'Roboto Condensed'}}>Sign Up</span></p>  
                     </div>
                     <div className='sign-up'>

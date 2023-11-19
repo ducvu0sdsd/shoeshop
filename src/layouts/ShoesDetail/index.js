@@ -434,7 +434,7 @@ function ShoesDetail({product, products, user}) {
                                 <span style={{lineHeight : '0', fontSize : '16px', fontWeight : 'bold'}}>{feedback.user.name} <span style={{fontWeight : 500, fontSize : '14px', marginLeft : '5px'}}>{handleFormatDate(new Date(feedback.datetime))}</span></span>
                                 {feedback.content}
                             </div>
-                            {user?.id == feedback.user?.id ? <i onClick={() => handleRemoveMessage(feedback.id)} style={{fontSize : '25px', cursor : 'pointer'}} className='bx bx-x'></i> : <></>}
+                            {user?.admin == false ? user?.id == feedback.user?.id ? <i onClick={() => handleRemoveMessage(feedback.id)} style={{fontSize : '25px', cursor : 'pointer'}} className='bx bx-x'></i> : <></> : <i onClick={() => handleRemoveMessage(feedback.id)} style={{fontSize : '25px', cursor : 'pointer'}} className='bx bx-x'></i>}
                         </div>
                     )) : <></>}
                 </div>

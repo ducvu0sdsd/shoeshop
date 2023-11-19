@@ -20,6 +20,7 @@ import ClientsManagement from './layouts/Management/ClientsManagement';
 import PaymentPage from './layouts/PaymentPage';
 import SalesManagement from './layouts/Management/SalesManagement';
 import CartPage from './layouts/CartPage'
+import ForgotPasswordPage from './layouts/ForgotPasswordPage';
 
 
 function App() {
@@ -157,6 +158,7 @@ function App() {
           <Route path='/payment' element={<PaymentPage user1={user} />} />
           <Route path='/payment/:cart' element={user ? <PaymentPage user1={user} /> : <Navigate to='/' replace/>} />
           <Route path='/cart' element={user ? <CartPage /> : <></>} />
+          <Route path='/forgot-password-page' element={<ForgotPasswordPage />} />
           <Route path={`/categories/sneakers/all`} element={<Categories categoryName={'Sneaker'} brandName={'All Sneaker'} products={products}/>}/>
           <Route path={`/categories/sandals/all`} element={<Categories categoryName={'Sandal'} brandName={'All Sandal'} products={products}/>}/>
           <Route path={`/categories/customs/all`} element={<Categories categoryName={'Custom'} brandName={'All Custom'} products={products}/>}/>
