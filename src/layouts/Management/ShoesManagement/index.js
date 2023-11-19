@@ -46,9 +46,9 @@ function ProductManagement({brands, products1, suppliers}) {
     const getData = () => {
         return new Promise((revolve,reject) => {
             let name = [document.querySelector('#product-management .txt-name').value]
-            if (name[0] == ''){
+            if (!/^([A-Z][A-Za-z0-9]{1,}( [A-Z][A-Za-z0-9]{1,}){0,})$/.test(name[0])){
                 setNof({status : 'none', message : ""})
-                setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Username'})}, 50);
+                setTimeout(() => {setNof({status : 'fail', message : 'The name must have the first letter capitalized and only use letters'})}, 50);
                 revolve(null)
             }
             let overview = [document.querySelector('#product-management .txt-overview').value.trim()]

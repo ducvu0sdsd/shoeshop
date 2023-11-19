@@ -120,12 +120,12 @@ function Header({user, products}) {
             setTimeout(() => {setNof({status : 'fail', message : "Username must be between 6 and 20 characters, using only numbers and letters"})}, 50);
             return false;
         } 
-        if (name == '') {
+        if (!/^([A-Z][a-z]){1,}( [A-Z][a-z]{1,}){0,}$/.test(name)) {
             setNof({status : 'none', message : ""})
-            setTimeout(() => {setNof({status : 'fail', message : "The name cannot be empty"})}, 50);
+            setTimeout(() => {setNof({status : 'fail', message : "The name must have the first letter capitalized and only use letters"})}, 50);
             return false;
         } 
-        if (!/@gmail.com/.test(email)) {
+        if (!/@(gmail.com|yahoo.vn)$/.test(email)) {
             setNof({status : 'none', message : ""})
             setTimeout(() => {setNof({status : 'fail', message : "The email invalid"})}, 50);
             return false;
@@ -140,14 +140,14 @@ function Header({user, products}) {
             setTimeout(() => {setNof({status : 'fail', message : "The address cannot be empty"})}, 50);
             return false;
         } 
-        if (gender == 'None') {
-            setNof({status : 'none', message : ""})
-            setTimeout(() => {setNof({status : 'fail', message : "Please Choose Gender"})}, 50);
-            return false;
-        } 
         if (date == '') {
             setNof({status : 'none', message : ""})
             setTimeout(() => {setNof({status : 'fail', message : "Please Choose Date"})}, 50);
+            return false;
+        } 
+        if (gender == 'None') {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : "Please Choose Gender"})}, 50);
             return false;
         } 
         if (!/.{6,}/.test(password)) {
@@ -238,6 +238,7 @@ function Header({user, products}) {
                         setTimeout(() => {setNof({status : 'success', message : 'Sign In Successfully'})}, 50);
                         localStorage.setItem('token', res.data.responseData.re.body.token)
                         localStorage.setItem('username', res.data.responseData.user.username)
+                        navigate('/')
                         setTimeout(() => {
                             window.location.reload()
                         }, 2000)

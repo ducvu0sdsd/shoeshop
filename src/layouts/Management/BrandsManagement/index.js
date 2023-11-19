@@ -37,7 +37,7 @@ function BrandsManagement({brands}) {
     const handleInsertBrand = () => {
         let token = 'Bearer ' + localStorage.getItem("token")
         let name = document.querySelector('.txt-name').value;
-        if (images.length != 0 && name != '') {
+        if (images.length != 0 && /^([A-Z][A-Za-z0-9]){1,}( [A-Z][A-Za-z0-9]{1,}){0,}$/.test(name)) {
             axios.post('/brands/insert-brand', {brandName : name, logo : images[0].img}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
                 .then(res => {
                     if (res.data == true) {
@@ -52,7 +52,7 @@ function BrandsManagement({brands}) {
                 })
         } else {
             setNof({status : 'none', message : ""})
-            setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Complete Information'})}, 50);
+            setTimeout(() => {setNof({status : 'fail', message : 'The name must have the first letter capitalized and only use letters, must be choose 1 image'})}, 50);
         }
     };
 
@@ -85,7 +85,7 @@ function BrandsManagement({brands}) {
 
         if (id != "") {
             let id1 = parseInt(id)
-            if (images.length != 0) {
+            if (images.length != 0 && /^([A-Z][A-Za-z0-9]){1,}( [A-Z][A-Za-z0-9]{1,}){0,}$/.test(name)) {
                 axios.put('/brands/update-brand', {id : id1,brandName : name, logo : images[0].img}, {headers : {Authorization : token, 'Content-Type': 'application/json'}})
                     .then(res => {
                         if (res.data == true) {
@@ -100,7 +100,7 @@ function BrandsManagement({brands}) {
                     })
             } else {
                 setNof({status : 'none', message : ""})
-                setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Complete Information'})}, 50);
+                setTimeout(() => {setNof({status : 'fail', message : 'The name must have the first letter capitalized and only use letters, must be choose 1 image'})}, 50);
             }
         } else {
             setNof({status : 'none', message : ""})

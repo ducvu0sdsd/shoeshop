@@ -104,14 +104,14 @@ function ImportProductPage({products}) {
             setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Product'})}, 50);
             return false;
         }
+        if (txt_buy_price == '') {
+            setNof({status : 'none', message : ""})
+            setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Import Price'})}, 50);
+            return false;
+        }
         if (txt_retail_price == "" ) {
             setNof({status : 'none', message : ""})
             setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Retail Price'})}, 50);
-            return false;
-        }
-        if (txt_buy_price == "") {
-            setNof({status : 'none', message : ""})
-            setTimeout(() => {setNof({status : 'fail', message : 'Please Enter Buy Price'})}, 50);
             return false;
         }
         if (txt_quantity == "") {
