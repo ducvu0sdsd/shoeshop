@@ -120,7 +120,7 @@ function Header({user, products}) {
             setTimeout(() => {setNof({status : 'fail', message : "Username must be between 6 and 20 characters, using only numbers and letters"})}, 50);
             return false;
         } 
-        if (!/^([A-Z][a-z]){1,}( [A-Z][a-z]{1,}){0,}$/.test(name)) {
+        if (!/^([A-Z][a-z]{1,}( [A-Z][a-z]{1,}){0,})$/.test(name)) {
             setNof({status : 'none', message : ""})
             setTimeout(() => {setNof({status : 'fail', message : "The name must have the first letter capitalized and only use letters"})}, 50);
             return false;

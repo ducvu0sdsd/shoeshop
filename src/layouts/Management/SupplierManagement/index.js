@@ -39,7 +39,7 @@ function SupplierManagerMent({suppliers}) {
         let name = document.querySelector('.txt-name').value;
         let address = document.querySelector('.txt-address').value;
         let phone = document.querySelector('.txt-phone').value;
-        if (!/^([A-Z][a-z]){1,}( [A-Z][a-z]{1,}){0,}$/.test(name)) {
+        if (!/^([A-Z][a-z]{1,}( [A-Z][a-z]{1,}){0,})$/.test(name)) {
             setNof({status : 'none', message : ""})
             setTimeout(() => {setNof({status : 'fail', message : 'The name must have the first letter capitalized and only use letters'})}, 50);
             return null;
