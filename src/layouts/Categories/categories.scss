@@ -82,7 +82,7 @@
     & .list-item {
         margin: 0 10px;
         overflow-y: auto;
-        height: 1100px;
+        max-height: 1100px;
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
