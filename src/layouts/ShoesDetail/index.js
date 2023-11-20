@@ -425,18 +425,22 @@ function ShoesDetail({product, products, user}) {
             <div className='col-lg-10 overview'>
                 <h4 className='col-lg-12 title'>FeedBack</h4>
                 <div className='col-lg-12 feedbacks' style={{marginTop : '35px'}}>
-                    {feedbacks.length > 0 ? feedbacks.map((feedback, index) => (
-                        <div className='feedback-item' key={index}>
-                            <div className='avatar'>
-                                <img src={feedback.user.avatar} width={"100%"}  />
-                            </div>
-                            <div className='message'>
-                                <span style={{lineHeight : '0', fontSize : '16px', fontWeight : 'bold'}}>{feedback.user.name} <span style={{fontWeight : 500, fontSize : '14px', marginLeft : '5px'}}>{handleFormatDate(new Date(feedback.datetime))}</span></span>
-                                {feedback.content}
-                            </div>
-                            {user?.admin == false ? user?.id == feedback.user?.id ? <i onClick={() => handleRemoveMessage(feedback.id)} style={{fontSize : '25px', cursor : 'pointer'}} className='bx bx-x'></i> : <></> : <i onClick={() => handleRemoveMessage(feedback.id)} style={{fontSize : '25px', cursor : 'pointer'}} className='bx bx-x'></i>}
-                        </div>
-                    )) : <></>}
+                    {feedbacks.length > 0 ? feedbacks.map((feedback, index) => {
+                        if (feedback.product.id == product.id) {
+                            return (
+                                <div className='feedback-item' key={index}>
+                                    <div className='avatar'>
+                                        <img src={feedback.user.avatar} width={"100%"}  />
+                                    </div>
+                                    <div className='message'>
+                                        <span style={{lineHeight : '0', fontSize : '16px', fontWeight : 'bold'}}>{feedback.user.name} <span style={{fontWeight : 500, fontSize : '14px', marginLeft : '5px'}}>{handleFormatDate(new Date(feedback.datetime))}</span></span>
+                                        {feedback.content}
+                                    </div>
+                                    {user?.admin == false ? user?.id == feedback.user?.id ? <i onClick={() => handleRemoveMessage(feedback.id)} style={{fontSize : '25px', cursor : 'pointer'}} className='bx bx-x'></i> : <></> : <i onClick={() => handleRemoveMessage(feedback.id)} style={{fontSize : '25px', cursor : 'pointer'}} className='bx bx-x'></i>}
+                                </div>
+                            )
+                        }
+                    }) : <></>}
                 </div>
                 {user ? <div className='col-lg-12 feedback-user'>   
                     <div className='avatar'>
