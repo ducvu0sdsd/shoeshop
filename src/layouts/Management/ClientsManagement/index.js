@@ -89,7 +89,7 @@ function ClientsManagement({clients}) {
     const handleLinkToOrdersOfCustomer = () => {
         customer_name = document.querySelector('#client-management .txt-name').value
         localStorage.setItem('customer_name', customer_name)
-        navigate('/accounts/sales-management')
+        navigate('/account/sales-management')
     }
 
     return (
