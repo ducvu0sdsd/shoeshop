@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 import Provider from './components/UseContext/Provider';
-axios.defaults.baseURL = 'http://ec2-54-169-78-233.ap-southeast-1.compute.amazonaws.com:8080/api/v1'
+axios.defaults.baseURL = 'http://ec2-13-250-25-36.ap-southeast-1.compute.amazonaws.com:8080/api/v1'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
